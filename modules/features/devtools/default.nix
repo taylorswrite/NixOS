@@ -26,6 +26,7 @@
 
       # --- Editors & CLI Tools ---
       pkgsUnstable.opencode
+      psmisc
 
       # --- Language Servers ---
       rPackages.languageserver
