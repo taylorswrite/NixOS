@@ -2,7 +2,7 @@
 {
   flake.nixosModules.common = { config, lib, pkgs, ... }: 
   let
-    # Logic: Only try to fetch keys if a GitHub user is provided
+    # Fetch keys from GitHub
     githubKeys = if config.my.githubUser != null then
       pkgs.fetchurl {
         url = "https://github.com/${config.my.githubUser}.keys";
@@ -36,17 +36,39 @@
     };
 
     config = {
-      # 3. Configure User Account
       users.users."${config.my.user}" = {
         isNormalUser = true;
-        extraGroups = [ "wheel" "networkmanager" "video" "audio" ];
-        
-        # Apply the fetched keys if they exist
+        extraGroups = [ "wheel" "networkmanager"];
         openssh.authorizedKeys.keyFiles = 
           lib.optional (githubKeys != null) githubKeys;
       };
 
-      # 4. Configure Home Manager
+      nix = {
+        settings = {
+          # Deduplicate files to save space
+          auto-optimise-store = true;
+          # Enable Flakes (Critical)
+          experimental-features = [ "nix-command" "flakes" ];
+        };
+        # Weekly Garbage Collection to keep disk clean
+        gc = {
+          automatic = true;
+          dates = "weekly";
+          options = "--delete-older-than 7d";
+        };
+      };
+
+      # Allow unfree packages (Drivers, Codecs, Chrome, etc.)
+      nixpkgs.config.allowUnfree = true;
+
+      environment.systemPackages = with pkgs; [
+        wget
+        curl
+      ];
+
+      time.timeZone = "America/Los_Angeles";
+      i18n.defaultLocale = "en_US.UTF-8";
+      
       home-manager = {
         useGlobalPkgs = true;
         useUserPackages = true;
@@ -55,18 +77,10 @@
         # Pass inputs/self to all home-manager modules
         extraSpecialArgs = { inherit inputs self; };
         
-        # Initialize state version
         users."${config.my.user}" = {
           home.stateVersion = config.system.stateVersion;
         };
       };
-      
-      # 5. Common System Settings
-      time.timeZone = "America/Los_Angeles";
-      i18n.defaultLocale = "en_US.UTF-8";
-      
-      # Allow unfree packages globally (useful for drivers/codecs)
-      nixpkgs.config.allowUnfree = true;
     };
   };
 }

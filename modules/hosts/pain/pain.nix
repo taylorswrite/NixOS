@@ -38,7 +38,7 @@
           system.stateVersion = "25.11";
 
           # Machine-specific LUKS UUID
-          boot.initrd.luks.devices."luks-root".device =
+          boot.initrd.luks.devices."luks-2195aaa6-86fb-4bae-beb5-788bd215c347".device =
             "/dev/disk/by-uuid/2195aaa6-86fb-4bae-beb5-788bd215c347";
 
           # Git Identity (Required options for the git module)

@@ -20,15 +20,12 @@
     };
 
     config = lib.mkIf cfg.enable {
-      # 1. System Level
       programs.git.enable = true;
 
-      # 2. User Level (Home Manager)
       home-manager.users."${config.my.user}" = {
         programs.git = {
           enable = true;
           
-          # FIX: All config now lives under 'settings'
           settings = {
             user = {
               name = cfg.userName;

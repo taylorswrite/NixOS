@@ -1,17 +1,14 @@
 { self, ... }:
 {
-  # ==========================================
-  # 1. Standard Sway Module
-  # ==========================================
   flake.nixosModules.sway = { config, pkgs, lib, ... }: {
-    # --- System Level Configuration ---
+    # System Level Configuration
     programs.sway = {
       enable = true;
       wrapperFeatures.gtk = true;
       package = pkgs.swayfx;
     };
 
-    # --- Home Manager Configuration ---
+    # Home Manager Configuration
     home-manager.users."${config.my.user}" = { pkgs, lib, ... }: { 
       
       imports = [
@@ -21,8 +18,6 @@
         ./_swaylock.nix
       ];
 
-      # Activation Script for Wallpaper
-      # Now 'lib.hm' will exist because we are using the inner 'lib'
       home.activation.setupWallpaper = lib.hm.dag.entryAfter ["writeBoundary"] ''
         CACHE_DIR="$HOME/.cache/sway"
         mkdir -p "$CACHE_DIR"
@@ -40,9 +35,6 @@
     };
   };
 
-  # ==========================================
-  # 2. Nvidia-Specific Module
-  # ==========================================
   flake.nixosModules.swayNvidia = { config, pkgs, ... }: {
     imports = [ self.nixosModules.sway ];
 
