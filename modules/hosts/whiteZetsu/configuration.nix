@@ -7,7 +7,7 @@
       "${inputs.nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
 
       # 2. Your Custom Modules
-      self.nixosModules.common      # Home Manager, Locale, Base Utils
+      self.nixosModules.common # Home Manager, Locale, Base Utils
       # self.nixosModules.grub        # Grub & EFI
       # self.nixosModules.plymouth    # Boot Animation (Silent)
       # self.nixosModules.nvidiaOpen  # Nvidia Drivers & Graphics
@@ -16,36 +16,35 @@
       # self.nixosModules.ssh         # Hardened SSH
       # self.nixosModules.tailscale   # VPN
       # self.nixosModules.fail2ban    # Security
-      self.nixosModules.sddm        # Login Manager
+      self.nixosModules.sddm # Login Manager
       # self.nixosModules.swayNvidia  # Main WM (Sway + Nvidia Fixes)
-      self.nixosModules.xfce        # Backup Desktop
+      self.nixosModules.xfce # Backup Desktop
       # self.nixosModules.mako        # Notifications
-      self.nixosModules.fish        # Shell Config (Aliases/Init)
-      self.nixosModules.starship    # Prompt
-      self.nixosModules.kitty       # Kitty
-      self.nixosModules.tmux        # Terminal Multiplexer
+      self.nixosModules.fish # Shell Config (Aliases/Init)
+      self.nixosModules.starship # Prompt
+      self.nixosModules.kitty # Kitty
+      self.nixosModules.tmux # Terminal Multiplexer
       # self.nixosModules.pomodoro    # CLI Timer
-      self.nixosModules.firefox     # Privacy Browser + Vertical Tabs
-      self.nixosModules.nvim        # LazyVim
-      self.nixosModules.git         # Git + Delta + LazyGit
-      self.nixosModules.dev         # Languages (Python, R, Rust) & Tools
+      self.nixosModules.firefox # Privacy Browser + Vertical Tabs
+      self.nixosModules.nvim # LazyVim
+      self.nixosModules.git # Git + Delta + LazyGit
+      self.nixosModules.dev # Languages (Python, R, Rust) & Tools
       # self.nixosModules.docker      # Container Engine
       # self.nixosModules.kvm         # VM Engine (Virt-Manager)
-      self.nixosModules.direnv      # Auto-load dev environments (.envrc integration)
+      self.nixosModules.direnv # Auto-load dev environments (.envrc integration)
       # self.nixosModules.audio       # Pipewire (Sound) & Audio Group Permissions
       # self.nixosModules.video       # OpenGL (Graphics), Webcam & Brightness Permissions
-      self.nixosModules.bluetooth   # Bluetooth Hardware & GUI Manager (Blueman)
+      self.nixosModules.bluetooth # Bluetooth Hardware & GUI Manager (Blueman)
 
       # ISO-Specific Configuration
-      ({ pkgs, ... }: {
+      ({ config, pkgs, lib, ... }: {
         networking.hostName = "nixos-installer";
-        
-        # Enable proprietary drivers
         nixpkgs.config.allowUnfree = true;
         hardware.enableAllFirmware = true;
-
-        # Improves image build speed
         isoImage.squashfsCompression = "gzip -Xcompression-level 1";
+        my.user = "NixOS";
+        users.users.root.initialHashedPassword = lib.mkForce "$6$kfftua1sldp8Opg.$/ohgIQzRrOoF1Y1.OCUigMQ8Lk1ef7UOHMyFnL9QYTqIyjLlUWTYo6xFGJu47Pd6Db/R.mkNHtVIw8DDgtmvP/";
+        users.users."${config.my.user}".initialHashedPassword = "$6$kfftua1sldp8Opg.$/ohgIQzRrOoF1Y1.OCUigMQ8Lk1ef7UOHMyFnL9QYTqIyjLlUWTYo6xFGJu47Pd6Db/R.mkNHtVIw8DDgtmvP/";
       })
     ];
   };
