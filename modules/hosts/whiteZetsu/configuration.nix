@@ -1,6 +1,6 @@
 { inputs, self, ... }:
 {
-  flake.nixosConfigurations.install-iso = inputs.nixpkgs.lib.nixosSystem {
+  flake.nixosConfigurations.whiteZetsu = inputs.nixpkgs.lib.nixosSystem {
     system = "x86_64-linux";
     modules = [
       # 1. The Official Installer Module
@@ -38,7 +38,7 @@
 
       # ISO-Specific Configuration
       ({ config, pkgs, lib, ... }: {
-        networking.hostName = "nixos-installer";
+        networking.hostName = "whiteZetsu";
         nixpkgs.config.allowUnfree = true;
         hardware.enableAllFirmware = true;
         isoImage.squashfsCompression = "gzip -Xcompression-level 1";

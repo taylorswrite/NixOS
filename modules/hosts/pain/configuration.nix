@@ -55,6 +55,7 @@
           # Host-Specific Aliases
           home-manager.users."${config.my.user}".programs.fish.shellAliases = {
             nixup = "sudo nixos-rebuild switch --flake ~/.nix/#${config.networking.hostName}";
+            nixiso = "nix build ~/.nix/#nixosConfigurations.whiteZetsu.config.system.build.isoImage";
           };
         }
       )
