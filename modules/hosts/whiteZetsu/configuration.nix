@@ -1,35 +1,50 @@
-# ISO Generation
 { inputs, self, ... }:
 {
-  # Define the new configuration directly in the flake outputs
   flake.nixosConfigurations.install-iso = inputs.nixpkgs.lib.nixosSystem {
     system = "x86_64-linux";
-    specialArgs = { inherit inputs self; };
     modules = [
-      # 1. The Official Installer Module (Live CD Logic)
+      # 1. The Official Installer Module
       "${inputs.nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
 
       # 2. Your Custom Modules
-      # This gives the USB stick your shell, wifi, keys, and tools!
-      self.nixosModules.common
-      self.nixosModules.wifi
-      self.nixosModules.fish
-      self.nixosModules.dev     # (Optional) Makes the ISO larger, but gives you Python/Git
-      self.nixosModules.direnv
-      # Note: We SKIP 'audio', 'video', 'docker', 'kvm' to keep the ISO smaller/bootable
+      self.nixosModules.common      # Home Manager, Locale, Base Utils
+      # self.nixosModules.grub        # Grub & EFI
+      # self.nixosModules.plymouth    # Boot Animation (Silent)
+      # self.nixosModules.nvidiaOpen  # Nvidia Drivers & Graphics
+      self.nixosModules.wifiStandard
+      # self.nixosModules.wifiImpala  # Lightweight IWD + Impala TUI
+      # self.nixosModules.ssh         # Hardened SSH
+      # self.nixosModules.tailscale   # VPN
+      # self.nixosModules.fail2ban    # Security
+      self.nixosModules.sddm        # Login Manager
+      # self.nixosModules.swayNvidia  # Main WM (Sway + Nvidia Fixes)
+      self.nixosModules.xfce        # Backup Desktop
+      # self.nixosModules.mako        # Notifications
+      self.nixosModules.fish        # Shell Config (Aliases/Init)
+      self.nixosModules.starship    # Prompt
+      self.nixosModules.kitty       # Kitty
+      self.nixosModules.tmux        # Terminal Multiplexer
+      # self.nixosModules.pomodoro    # CLI Timer
+      self.nixosModules.firefox     # Privacy Browser + Vertical Tabs
+      self.nixosModules.nvim        # LazyVim
+      self.nixosModules.git         # Git + Delta + LazyGit
+      self.nixosModules.dev         # Languages (Python, R, Rust) & Tools
+      # self.nixosModules.docker      # Container Engine
+      # self.nixosModules.kvm         # VM Engine (Virt-Manager)
+      self.nixosModules.direnv      # Auto-load dev environments (.envrc integration)
+      # self.nixosModules.audio       # Pipewire (Sound) & Audio Group Permissions
+      # self.nixosModules.video       # OpenGL (Graphics), Webcam & Brightness Permissions
+      self.nixosModules.bluetooth   # Bluetooth Hardware & GUI Manager (Blueman)
 
-      # 3. ISO-Specific Configuration
+      # ISO-Specific Configuration
       ({ pkgs, ... }: {
         networking.hostName = "nixos-installer";
         
-        # Enable proprietary drivers (Broadcom/Intel WiFi)
+        # Enable proprietary drivers
         nixpkgs.config.allowUnfree = true;
         hardware.enableAllFirmware = true;
 
-        # Ensure the default 'nixos' user has access to network/sudo
-        users.users.nixos.extraGroups = [ "wheel" "networkmanager" ];
-
-        # Speed up the build (Gzip is faster than the default XZ, but makes a slightly larger ISO)
+        # Improves image build speed
         isoImage.squashfsCompression = "gzip -Xcompression-level 1";
       })
     ];
