@@ -8,7 +8,7 @@
     hardware.nvidia = {
       modesetting.enable = true;
       powerManagement.enable = false;
-      open = true; # Use open-source kernel modules
+      open = false; # Use open-source kernel modules
       nvidiaSettings = true;
       package = config.boot.kernelPackages.nvidiaPackages.stable;
     };
