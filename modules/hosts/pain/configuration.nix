@@ -31,6 +31,7 @@
       self.nixosModules.video # OpenGL (Graphics), Webcam & Brightness Permissions
       self.nixosModules.bluetooth # Bluetooth Hardware & GUI Manager (Blueman)
       self.nixosModules.spotify # Spotify GUI
+      self.nixosModules.zathura # Added PDF viewer
 
       # Machine-specific
       (
