@@ -15,6 +15,12 @@
           # Add extra plugins
           programs.neovim.plugins = [
             pkgs.vimPlugins.snacks-nvim
+            (pkgs.vimPlugins.nvim-treesitter.withPlugins (p: [
+              p.json
+              p.nix
+              p.python
+              p.markdown
+            ]))
           ];
 
           programs.lazyvim = {
