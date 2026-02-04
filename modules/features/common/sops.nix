@@ -1,18 +1,25 @@
-{ inputs, config, rootPath, ... }:
+{ inputs, config, ... }:
 {
-  # This makes the sops-nix NixOS module available to your system
-  imports = [ inputs.sops-nix.nixosModules.sops ];
+  flake.nixosModules.sops = { pkgs, config, ... }: {
+    imports = [ inputs.sops-nix.nixosModules.sops ];
 
-  sops = {
-    # Points to your encrypted secrets file in the repo root
-    defaultSopsFile = "${rootPath}/secrets.yaml";
-    
-    # Automatically use the machine's SSH keys for decryption
-    age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
-    
-    # Placeholder for secrets you want to define
-    secrets.spotify_password = {
-      owner = config.my.user; # Ensure your user can read the decrypted file
+    sops = {
+      # This points to a secrets file in your flake root
+      defaultSopsFile = ./secrets.yaml;
+
+      # Use the host's SSH key for decryption
+      age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
+
+      secrets = {
+        "spotify_email" = {
+          owner = config.my.user; # Set to your user "taylor"
+        };
+        "spotify_password" = {
+          owner = config.my.user;
+        };
+      };
     };
+
+    environment.systemPackages = [ pkgs.sops ];
   };
 }
