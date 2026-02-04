@@ -4,6 +4,8 @@
 
 -- lua/config/keymaps.lua
 
+vim.keymap.set("t", "<Esc><Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
+
 -- Prevents crashes if the file has a swap file (E325) or is already open
 -- Helper function to safely open a file in a vertical split
 local function safe_vsplit(filepath)

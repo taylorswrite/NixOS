@@ -9,6 +9,7 @@
 
     # --- Startup Executables ---
     exec mako
+    exec autotiling
 
     # --- SWAYFX VISUALS ---
     corner_radius 10

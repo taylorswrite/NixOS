@@ -17,7 +17,7 @@
         ./_config.nix
         ./_swaylock.nix
       ];
-
+      
       home.activation.setupWallpaper = lib.hm.dag.entryAfter ["writeBoundary"] ''
         CACHE_DIR="$HOME/.cache/sway"
         mkdir -p "$CACHE_DIR"

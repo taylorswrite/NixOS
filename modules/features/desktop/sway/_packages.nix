@@ -26,6 +26,7 @@ in
     jq
     wtype
     libnotify
+    autotiling
 
     # Apps
     btop

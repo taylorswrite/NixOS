@@ -23,6 +23,7 @@
 
       # --- Scientific Publishing ---
       quarto
+      typst
 
       # --- Editors & CLI Tools ---
       pkgsUnstable.opencode

@@ -1,6 +1,6 @@
 { self, ... }:
 {
-  flake.nixosModules.nvidiaOpen = { config, pkgs, ... }: {
+  flake.nixosModules.nvidia = { config, pkgs, ... }: {
     nixpkgs.config.allowUnfree = true;
     services.xserver.videoDrivers = [ "nvidia" ];
     boot.kernelParams = [ "nvidia_drm.modeset=1" "nvidia_drm.fbdev=1" ];

@@ -6,7 +6,7 @@
       self.nixosModules.common      # Home Manager, Locale, Base Utils
       self.nixosModules.grub        # Grub & EFI
       self.nixosModules.plymouth    # Boot Animation (Silent)
-      self.nixosModules.nvidiaOpen  # Nvidia Drivers & Graphics
+      self.nixosModules.nvidia      # Nvidia Drivers & Graphics
       self.nixosModules.wifiImpala  # Lightweight IWD + Impala TUI
       self.nixosModules.ssh         # Hardened SSH
       self.nixosModules.tailscale   # VPN
@@ -30,6 +30,7 @@
       self.nixosModules.audio       # Pipewire (Sound) & Audio Group Permissions
       self.nixosModules.video       # OpenGL (Graphics), Webcam & Brightness Permissions
       self.nixosModules.bluetooth   # Bluetooth Hardware & GUI Manager (Blueman)
+      self.nixosModules.spotify     # Spotify GUI
 
       # Machine-specific
       (
