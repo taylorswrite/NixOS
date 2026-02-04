@@ -5,7 +5,7 @@
     let
       # Helper to simplify the path to the .xpi files in the Nix store
       addonPath = pkg: "file://${pkg}/share/mozilla/extensions/{ec8030f7-c20a-464f-9b0e-13a3a9e97384}";
-      addons = inputs.firefox-addons.packages."${pkgs.system}";
+      addons = inputs.firefox-addons.packages."${pkgs.stdenv.hostPlatform.system}";
     in
     {
       # --- SYSTEM CONFIGURATION ---
