@@ -1,7 +1,6 @@
 { self, ... }:
 {
-  flake.nixosModules.tmux =
-    { config, pkgs, ... }:
+  flake.nixosModules.tmux = { config, pkgs, ... }:
     let
       # Helper script to find git root or current directory
       project-root = pkgs.writeShellScriptBin "project-root" ''
@@ -19,7 +18,7 @@
           escapeTime = 0;
           keyMode = "vi";
           mouse = true;
-
+          
           plugins = with pkgs.tmuxPlugins; [
             sensible
             yank
@@ -43,7 +42,7 @@
             # --- Theme: Catppuccin v2 ---
             set -g @catppuccin_flavor 'mocha'
             set -g @catppuccin_window_status_style "rounded"
-
+            
             # Module Text
             set -g @catppuccin_window_default_text " #W"
             set -g @catppuccin_window_current_text " #W"
@@ -139,9 +138,10 @@
             # [!IMPORTANT] OVERRIDES (Must be LAST to win against the theme)
             # Status Bar Background (#1E1E2E - Mocha Base)
             set -g status-style "bg=#1E1E2E"
-
-            # Selection Highlight (#F5E0DC - Rosewater)
-            set -g mode-style "bg=#F5E0DC,fg=#1E1E2E"
+            
+            # Selection Highlight (#B4BEFE - Lavender)
+            # Changed from Rosewater to Lavender for better contrast
+            set -g mode-style "bg=#B4BEFE,fg=#1E1E2E"
           '';
         };
       };
