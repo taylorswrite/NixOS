@@ -10,6 +10,7 @@
     # --- Startup Executables ---
     exec mako
     exec autotiling
+    exec spotifyd
 
     # --- SWAYFX VISUALS ---
     corner_radius 8
@@ -26,7 +27,7 @@
 
     # --- Global Appearance ---
     font pango:JetBrainsMono Nerd Font Mono 12
-    default_border pixel 2
+    default_border pixel 0
     default_floating_border pixel 2
     gaps inner 0
     gaps outer 0
