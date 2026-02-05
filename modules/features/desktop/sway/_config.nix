@@ -12,7 +12,7 @@
     exec autotiling
 
     # --- SWAYFX VISUALS ---
-    corner_radius 10
+    corner_radius 8
     smart_corner_radius on
 
     # shadows on
@@ -28,7 +28,7 @@
     font pango:JetBrainsMono Nerd Font Mono 12
     default_border pixel 2
     default_floating_border pixel 2
-    gaps inner 10
+    gaps inner 0
     gaps outer 0
 
     # --- Colors ---
