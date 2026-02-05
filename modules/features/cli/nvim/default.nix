@@ -61,6 +61,7 @@
 
               # Markdown
               markdownlint-cli2
+              markdown-oxide
             ];
           };
         };
