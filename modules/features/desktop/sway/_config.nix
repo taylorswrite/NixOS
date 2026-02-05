@@ -12,6 +12,24 @@
     exec autotiling
     exec spotifyd
 
+    # --- Window Assignments ---
+    # Workspace 1: Terminals
+    assign [app_id="kitty"] workspace number 1
+
+    # Workspace 2: Browser
+    assign [app_id="firefox"] workspace number 2
+    assign [class="Firefox"] workspace number 2
+
+    # Workspace 3: Notes
+    assign [app_id="obsidian"] workspace number 3
+    assign [class="Obsidian"] workspace number 3
+
+    # Workspace 4: PDF Viewers
+    assign [app_id="org.kde.okular"] workspace number 4
+    assign [class="okular"] workspace number 4
+    assign [app_id="org.pwmt.zathura"] workspace number 4
+    assign [class="Zathura"] workspace number 4
+
     # --- SWAYFX VISUALS ---
     corner_radius 8
     smart_corner_radius on
@@ -29,7 +47,7 @@
     font pango:JetBrainsMono Nerd Font Mono 12
     default_border pixel 0
     default_floating_border pixel 2
-    gaps inner 0
+    gaps inner 5
     gaps outer 0
 
     # --- Colors ---
@@ -142,9 +160,7 @@
     bindsym $mod+Shift+e exec scratchpad-manager "scratch_impala" "kitty --class scratch_impala -e impala"
     # bindsym $mod+Shift+s exec scratchpad-manager "scratch_spotify" "kitty --class scratch_spotify -e spotify_player"
     bindsym $mod+Shift+s exec scratchpad-manager "spotify-qt" "env QT_QPA_PLATFORM=xcb spotify-qt"
-
-    # Firefox Toggle
-    bindsym $mod+Shift+a exec toggle-firefox
+    bindsym $mod+Shift+a exec scratchpad-manager "scratch_wiremix" "kitty --class scratch_wiremix -e wiremix"
 
     # Hardware Keys
     bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +5%

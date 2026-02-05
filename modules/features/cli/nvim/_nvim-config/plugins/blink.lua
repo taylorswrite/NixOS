@@ -8,23 +8,23 @@ return {
       name = "Completion",
       get = function()
         -- Default to true if the variable hasn't been set yet
-        return vim.b.completion ~= false
+        return vim.g.completion ~= false
       end,
       set = function(state)
-        vim.b.completion = state
+        vim.g.completion = state
       end,
     })
 
     -- 2. Define the toggle behavior
     local function toggle_completion()
       completion_toggle:toggle()
-      if vim.b.completion == false then
+      if vim.g.completion == false then
         require("blink.cmp").hide()
       end
     end
 
     -- 3. Set the keymap
-    vim.keymap.set({ "i", "n" }, "<C-q>", toggle_completion, { desc = "Toggle Completion" })
+    vim.keymap.set({ "i", "n" }, "<leader>um", toggle_completion, { desc = "Toggle Completion" })
 
     -- 4. Merge your existing settings
     opts.keymap = {
@@ -33,7 +33,7 @@ return {
 
     -- 5. Set the enabled condition
     opts.enabled = function()
-      return vim.b.completion ~= false
+      return vim.g.completion ~= false
     end
 
     return opts
