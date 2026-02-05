@@ -49,7 +49,7 @@ end
 -- =========================================
 vim.g.autoformat = false         -- <leader>uf (Format on Save)
 vim.g.snacks_animate = true      -- <leader>ua (Animations)
-vim.g.completion = false          -- <C-q>      (Completion) [!IMPORTANT] Added this
+vim.g.completion = true          -- <C-q>      (Completion) [!IMPORTANT] Added this
 vim.opt.spell = false            -- <leader>us (Spelling)
 vim.opt.wrap = false             -- <leader>uw (Wrap)
 vim.diagnostic.config({ virtual_text = false }) -- Uncomment to disable diagnostic text

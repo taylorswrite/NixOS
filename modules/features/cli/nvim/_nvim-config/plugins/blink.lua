@@ -24,7 +24,7 @@ return {
     end
 
     -- 3. Set the keymap
-    vim.keymap.set({ "i", "n" }, "<leader>um", toggle_completion, { desc = "Toggle Completion" })
+    vim.keymap.set({ "i", "n" }, "<leader>uM", toggle_completion, { desc = "Toggle Completion" })
 
     -- 4. Merge your existing settings
     opts.keymap = {
