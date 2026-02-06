@@ -31,7 +31,7 @@
     assign [class="Zathura"] workspace number 4
 
     # --- SWAYFX VISUALS ---
-    corner_radius 0
+    corner_radius 5
     smart_corner_radius on
 
     # shadows on
@@ -45,10 +45,10 @@
 
     # --- Global Appearance ---
     font pango:JetBrainsMono Nerd Font Mono 12
-    default_border pixel 0
+    default_border pixel 1
     default_floating_border pixel 2
-    gaps inner 0
-    gaps outer 0
+    gaps inner 5
+    gaps outer -5
 
     # --- Colors ---
     client.focused          #bd93f9 #bd93f9 #f8f8f2 #bd93f9   #bd93f9
