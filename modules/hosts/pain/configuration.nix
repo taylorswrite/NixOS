@@ -34,6 +34,7 @@
       self.nixosModules.zathura     # Added PDF viewer
       self.nixosModules.sops        # Encrypted secrets
       self.nixosModules.wiremix     # Audio manager tui
+      self.nixosModules.gaming      # Gaming system
 
       # Machine-specific
       (
