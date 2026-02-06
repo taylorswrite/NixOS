@@ -42,6 +42,8 @@
           my.githubUser = "taylorswrite";
           my.githubKeyHash = "1hq4ja9zr0fzdmd2nn7bwx5a4kbp06y7kqclbqw7fk5lpab72syi";
           system.stateVersion = "25.11";
+          boot.initrd.luks.devices."luks-6109b0b5-580c-41ee-8f9d-331ab4208886".device =>
+
 
           # Git Identity (Required options for the git module)
           features.git = {
