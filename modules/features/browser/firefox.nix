@@ -86,6 +86,7 @@
               "distribution.searchplugins.defaultLocale" = "en-US";
               "general.useragent.locale" = "en-US";
               "gfx.webrender.all" = true;
+              "browser.tabs.inTitlebar" = 0;
 
               # New tab
               "browser.newtabpage.enabled" = false;
