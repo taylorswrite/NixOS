@@ -260,6 +260,22 @@ let
     fi
   '';
 
+  screenshotScript = pkgs.writeShellScriptBin "screenshot-script" ''
+    DIR="$HOME/Pictures/Screenshots"
+    mkdir -p "$DIR"
+    NAME="$DIR/$(date +'%Y-%m-%d_%H-%M-%S.png')"
+
+    if [ "$1" == "area" ]; then
+      # Select area, save to file, AND copy to clipboard
+      ${pkgs.grim}/bin/grim -g "$(${pkgs.slurp}/bin/slurp)" - | ${pkgs.coreutils}/bin/tee "$NAME" | ${pkgs.wl-clipboard}/bin/wl-copy
+    else
+      # Full screen, save to file, AND copy to clipboard
+      ${pkgs.grim}/bin/grim - | ${pkgs.coreutils}/bin/tee "$NAME" | ${pkgs.wl-clipboard}/bin/wl-copy
+    fi
+    
+    ${pkgs.libnotify}/bin/notify-send "Screenshot Saved" "Image saved to $NAME"
+  '';
+
 in
 {
   home.packages = [
@@ -272,5 +288,6 @@ in
     scratchpadScript
     clipboardScript
     firefoxToggleScript
+    screenshotScript
   ];
 }

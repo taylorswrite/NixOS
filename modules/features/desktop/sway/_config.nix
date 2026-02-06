@@ -30,6 +30,10 @@
     assign [app_id="org.pwmt.zathura"] workspace number 4
     assign [class="Zathura"] workspace number 4
 
+    # --- EXTERNAL MONITORS ---
+    output * pos 0 0
+    output DP-1 mode 1920x1080@144Hz pos 1920 0
+
     # --- SWAYFX VISUALS ---
     corner_radius 5
     smart_corner_radius on
@@ -130,6 +134,10 @@
     # Clipboard
     bindsym $mod+c exec smart-clipboard copy
     bindsym $mod+v exec smart-clipboard paste
+
+    # Screenshots (Save to Disk + Copy to Clipboard)
+    bindsym $mod+Shift+z exec screenshot-script area
+    bindsym $mod+Shift+x exec screenshot-script full
 
     # Focus / Move / Resize
     bindsym $mod+h focus left

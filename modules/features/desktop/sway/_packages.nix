@@ -33,5 +33,9 @@ in
     yazi
     impala
     kitty
+    wdisplays
+    zoom-us
+    pinta
+    mpv
   ];
 }
