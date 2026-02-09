@@ -37,5 +37,6 @@ in
     zoom-us
     pinta
     mpv
+    obsidian
   ];
 }
