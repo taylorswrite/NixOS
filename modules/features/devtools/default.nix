@@ -28,6 +28,7 @@
       # --- Editors & CLI Tools ---
       pkgsUnstable.opencode
       psmisc
+      bat
 
       # --- Language Servers ---
       rPackages.languageserver

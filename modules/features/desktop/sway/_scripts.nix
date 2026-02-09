@@ -44,10 +44,13 @@ let
         idx = min(percent // 10, 10)
         icon = charging_icons[idx] if is_charging else discharging_icons[idx]
 
+        # Output format: Icon + Percentage
+        output_text = f"{icon} {percent}%"
+
         if percent < 25:
-            print(f'<span foreground="#ff5555">{icon}</span>')
+            print(f'<span foreground="#ff5555">{output_text}</span>')
         else:
-            print(icon)
+            print(output_text)
     except Exception:
         print("ERR")
   '';
@@ -161,6 +164,7 @@ let
       --timestr "%H:%M" \
       --datestr ""
   '';
+
   # 2. WALLPAPER MANAGER
   wallpaperScript = pkgs.writeShellScriptBin "wallpaper-manager" ''
     NEW_WALLPAPER="$1"
@@ -213,12 +217,10 @@ let
     ')
 
     if [ "$focused_id" = "$target_id" ]; then
-      ${pkgs.swayfx}/bin/swaymsg "[app_id=\"$target_id\"] move scratchpad" 2>/dev/null ||
-        ${pkgs.swayfx}/bin/swaymsg "[class=\"$target_id\"] move scratchpad"
+      ${pkgs.swayfx}/bin/swaymsg "[app_id=\"$target_id\"] move scratchpad" 2>/dev/null || ${pkgs.swayfx}/bin/swaymsg "[class=\"$target_id\"] move scratchpad"
     else
       if ${pkgs.swayfx}/bin/swaymsg -t get_tree | grep -q -E "\"app_id\": \"$target_id\"|\"class\": \"$target_id\""; then
-        ${pkgs.swayfx}/bin/swaymsg "[app_id=\"$target_id\"] scratchpad show, resize set width 60ppt height 60ppt, move position center, focus" 2>/dev/null ||
-          ${pkgs.swayfx}/bin/swaymsg "[class=\"$target_id\"] scratchpad show, resize set width 60ppt height 60ppt, move position center, focus"
+        ${pkgs.swayfx}/bin/swaymsg "[app_id=\"$target_id\"] scratchpad show, resize set width 60ppt height 60ppt, move position center, focus" 2>/dev/null || ${pkgs.swayfx}/bin/swaymsg "[class=\"$target_id\"] scratchpad show, resize set width 60ppt height 60ppt, move position center, focus"
       else
         $cmd &
       fi
@@ -275,7 +277,6 @@ let
     
     ${pkgs.libnotify}/bin/notify-send "Screenshot Saved" "Image saved to $NAME"
   '';
-
 in
 {
   home.packages = [

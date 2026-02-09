@@ -1,6 +1,27 @@
 { config, pkgs, ... }:
 
 {
+  # --- i3blocks Configuration ---
+  xdg.configFile."i3blocks/config".text = ''
+    # Global properties
+    separator=false
+    separator_block_width=15
+    markup=pango
+
+    [volume]
+    command=volume-icon
+    interval=once
+    signal=10
+
+    [battery]
+    command=battery-icon
+    interval=10
+
+    [time]
+    command=date '+%A, %B %d %Y  %I:%M %p'
+    interval=5
+  '';
+
   xdg.configFile."sway/config".text = ''
     # --- Variables ---
     set $mod Mod4
@@ -171,9 +192,10 @@
     bindsym $mod+Shift+a exec scratchpad-manager "scratch_wiremix" "kitty --class scratch_wiremix -e wiremix"
 
     # Hardware Keys
-    bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +5%
-    bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -5%
-    bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
+    bindsym XF86AudioRaiseVolume exec "pactl set-sink-volume @DEFAULT_SINK@ +5% && pkill -RTMIN+10 i3blocks"
+    bindsym XF86AudioLowerVolume exec "pactl set-sink-volume @DEFAULT_SINK@ -5% && pkill -RTMIN+10 i3blocks"
+    bindsym XF86AudioMute exec "pactl set-sink-mute @DEFAULT_SINK@ toggle && pkill -RTMIN+10 i3blocks"
+    
     bindsym XF86AudioPlay exec playerctl play-pause
     bindsym XF86AudioPrev exec playerctl previous
     bindsym XF86AudioNext exec playerctl next
@@ -211,8 +233,8 @@
         modifier none
         colors {
             statusline #f8f8f2
-            background #2C407B
-            inactive_workspace #2C407B #2C407B #f8f8f2
+            background #1E1E2E
+            inactive_workspace #1E1E2E #1E1E2E #f8f8f2
             focused_workspace  #bd93f9 #bd93f9 #2C407B
         }
     }
