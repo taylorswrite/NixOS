@@ -2,34 +2,31 @@
 {
   flake.nixosModules.performance = { lib, config, pkgs, ... }:
   let
-    cfg = config.my.features.performance;
+    # cfg will now directly be the string value (e.g., "powersave")
+    cfg = config.my.performance;
   in
   {
-    options.my.features.performance = {
-      enable = lib.mkEnableOption "System power management profiles";
-      profile = lib.mkOption {
-        type = lib.types.enum [ "performance" "balanced" "powersave" ];
-        default = "balanced";
-        description = "Select the system power profile.";
-      };
+    options.my.performance = lib.mkOption {
+      type = lib.types.enum [ "performance" "balanced" "powersave" ];
+      default = "balanced";
+      description = "Select the system power profile directly.";
     };
 
-    config = lib.mkIf cfg.enable {
-      # Common utilities for all profiles
+    config = {
       environment.systemPackages = [ pkgs.powertop ];
       
-      # Profile-specific configurations
       powerManagement.cpuFreqGovernor = lib.mkForce (
-        if cfg.profile == "performance" then "performance"
-        else if cfg.profile == "balanced" then "schedutil"
+        if cfg == "performance" then "performance"
+        else if cfg == "balanced" then "schedutil"
         else "powersave"
       );
 
       services.tlp = {
         enable = true;
-        settings = lib.mkIf (cfg.profile == "powersave") {
-          CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
-          ENERGY_PERF_POLICY_ON_BAT = "power";
+        settings = {
+          CPU_SCALING_GOVERNOR_ON_AC = lib.mkIf (cfg == "performance") "performance";
+          CPU_SCALING_GOVERNOR_ON_BAT = lib.mkIf (cfg == "powersave") "powersave";
+          ENERGY_PERF_POLICY_ON_BAT = lib.mkIf (cfg == "powersave") "power";
         };
       };
     };
