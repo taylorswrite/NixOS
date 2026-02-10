@@ -4,7 +4,7 @@
   # --- i3blocks Configuration ---
   xdg.configFile."i3blocks/config".text = ''
     # Global properties
-    separator=false
+    separator=true
     separator_block_width=15
     markup=pango
 
@@ -15,10 +15,10 @@
 
     [battery]
     command=battery-icon
-    interval=10
+    interval=30
 
     [time]
-    command=date '+%A, %B %d %Y  %I:%M %p'
+    command=date '+%a, %b %d %I:%M %p'
     interval=5
   '';
 
@@ -91,6 +91,7 @@
     output * bg ~/.cache/sway/current_wallpaper.png fill
 
     # --- Idle Config ---
+    # 5m: Lock | 10m: Screen Off
     exec swayidle -w \
         timeout 300 'lock-script' \
         timeout 600 'swaymsg "output * dpms off"' \
@@ -233,8 +234,8 @@
         modifier none
         colors {
             statusline #f8f8f2
-            background #1E1E2E
-            inactive_workspace #1E1E2E #1E1E2E #f8f8f2
+            background #2C407B
+            inactive_workspace #2C407B #2C407B #f8f8f2
             focused_workspace  #bd93f9 #bd93f9 #2C407B
         }
     }

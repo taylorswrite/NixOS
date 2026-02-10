@@ -49,8 +49,7 @@
           my.performance = "powersave";
           system.stateVersion = "25.11";
           boot.initrd.luks.devices."luks-6109b0b5-580c-41ee-8f9d-331ab4208886".device = "/dev/disk/by-uuid/6109b0b5-580c-41ee-8f9d-331ab4208886";
-
-
+          boot.resumeDevice = "/dev/mapper/luks-6109b0b5-580c-41ee-8f9d-331ab4208886";
 
           # Git Identity (Required options for the git module)
           features.git = {

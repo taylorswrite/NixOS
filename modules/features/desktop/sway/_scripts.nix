@@ -44,8 +44,7 @@ let
         idx = min(percent // 10, 10)
         icon = charging_icons[idx] if is_charging else discharging_icons[idx]
 
-        # Output format: Icon + Percentage
-        output_text = f"{icon} {percent}%"
+        output_text = f"{icon}  {percent}%"
 
         if percent < 25:
             print(f'<span foreground="#ff5555">{output_text}</span>')
@@ -112,40 +111,14 @@ let
   # BASH SCRIPTS
   # ========================================================================
 
-  # 1. LOCK SCRIPT (Simplified: No battery, no ImageMagick overlay)
+  # 1. LOCK SCRIPT (FIXED: Uses pgrep to prevent double-locking)
   lockScript = pkgs.writeShellScriptBin "lock-script" ''
-    PID_FILE="/tmp/swaylock.pid"
-
-    # Check if swaylock is already running
-    if [ -f "$PID_FILE" ]; then
-        PID=$(cat "$PID_FILE")
-        if kill -0 "$PID" 2>/dev/null; then
-            echo "swaylock is already running (PID: $PID)"
-            exit 0
-        else
-            # PID file exists but process is dead, remove it
-            rm -f "$PID_FILE"
-        fi
+    # Check if swaylock is already running using pgrep
+    # -x matches exact process name
+    if ${pkgs.procps}/bin/pgrep -x swaylock >/dev/null; then
+        echo "swaylock is already running"
+        exit 0
     fi
-
-    # Create PID file with atomic operation
-    (
-        exec 200>"$PID_FILE"
-        if ${pkgs.flock}/bin/flock -n 200; then
-            echo $$ > "$PID_FILE"
-        else
-            echo "Failed to acquire lock for PID file"
-            exit 1
-        fi
-    ) || exit 1
-
-    # Cleanup function
-    cleanup() {
-        rm -f "$PID_FILE"
-    }
-
-    # Set up trap to cleanup on exit
-    trap cleanup EXIT INT TERM
 
     IMAGE="$HOME/.cache/sway/locked_bg.png"
 
@@ -196,13 +169,14 @@ let
   # 3. POWER MENU
   powermenuScript = pkgs.writeShellScriptBin "powermenu-script" ''
     WMENU_STYLE="-f 'Monospace 12' -N '#222222' -n '#ffffff' -S '#005577' -s '#ffffff'"
-    OPTIONS="Lock\nLogout\nSuspend\nReboot\nShutdown"
+    OPTIONS="Lock\nLogout\nSuspend\nHibernate\nReboot\nShutdown"
     CHOICE=$(echo -e "$OPTIONS" | eval ${pkgs.wmenu}/bin/wmenu -p "Power:" $WMENU_STYLE)
 
     case "$CHOICE" in
       Lock)     lock-script ;;
       Logout)   ${pkgs.swayfx}/bin/swaymsg exit ;;
       Suspend)  systemctl suspend ;;
+      Hibernate) systemctl hibernate ;;
       Reboot)   systemctl reboot ;;
       Shutdown) systemctl poweroff ;;
     esac
