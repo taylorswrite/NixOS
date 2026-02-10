@@ -36,6 +36,18 @@ return {
       return vim.g.completion ~= false
     end
 
+    -- 6. Add Dadbod completion source
+    opts.sources = vim.tbl_deep_extend("force", opts.sources or {}, {
+      default = { "lsp", "path", "snippets", "buffer", "dadbod" },
+      providers = {
+        dadbod = {
+          name = "Dadbod",
+          module = "vim_dadbod_completion.blink",
+          score_offset = 100, -- Prioritize database completions in SQL files
+        },
+      },
+    })
+
     return opts
   end,
 }
