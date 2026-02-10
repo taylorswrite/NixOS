@@ -38,12 +38,12 @@ return {
           end
           
           -- Notify user of the change
-          vim.notify("🔧 Updating Pyright: " .. vim.fn.fnamemodify(python_path, ":t"), vim.log.levels.INFO)
+          vim.notify("🔧 Updating ty: " .. vim.fn.fnamemodify(python_path, ":t"), vim.log.levels.INFO)
           
-          -- Get Pyright clients
-          local clients = vim.lsp.get_clients({ name = "pyright" })
+          -- Get ty clients
+          local clients = vim.lsp.get_clients({ name = "ty" })
           if #clients == 0 then
-            vim.notify("⚠️ Pyright not running - will apply on next start", vim.log.levels.WARN)
+            vim.notify("⚠️ ty not running - will apply on next start", vim.log.levels.WARN)
             return
           end
           

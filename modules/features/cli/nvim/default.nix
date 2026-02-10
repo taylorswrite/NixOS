@@ -50,6 +50,8 @@
               fzf
               tree-sitter
               ruff
+              ty
+              lsof
 
               # NixOS / Lang Servers
               nil
