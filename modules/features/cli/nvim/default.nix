@@ -39,6 +39,7 @@
                 r.enable = true;
                 julia.enable = true;
                 typst.enable = true;
+                # mini_surround.enable = true;
               };
             };
 
@@ -60,6 +61,11 @@
               nixd
               alejandra
               deadnix
+
+              # R
+              R
+              rPackages.languageserver
+              rPackages.tidyverse
 
               # Markdown
               markdownlint-cli2
