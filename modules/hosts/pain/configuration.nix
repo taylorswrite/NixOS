@@ -43,7 +43,7 @@
           networking.hostName = "pain";
           my.user = "taylor";
           my.githubUser = "taylorswrite";
-          my.githubKeyHash = "1hq4ja9zr0fzdmd2nn7bwx5a4kbp06y7kqclbqw7fk5lpab72syi";
+          my.githubKeyHash = "0yg0zj9galk84fq90xj5cxaiym7s0np6llmkq2prsjmrwkfqplrl";
           system.stateVersion = "25.11";
 
           # Machine-specific LUKS UUID
