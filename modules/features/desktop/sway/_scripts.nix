@@ -169,16 +169,16 @@ let
   # 3. POWER MENU
   powermenuScript = pkgs.writeShellScriptBin "powermenu-script" ''
     WMENU_STYLE="-f 'Monospace 12' -N '#222222' -n '#ffffff' -S '#005577' -s '#ffffff'"
-    OPTIONS="Lock\nLogout\nSuspend\nHibernate\nReboot\nShutdown"
+    OPTIONS="lock\nlogout\nsuspend\nhibernate\nreboot\nshutdown"
     CHOICE=$(echo -e "$OPTIONS" | eval ${pkgs.wmenu}/bin/wmenu -p "Power:" $WMENU_STYLE)
 
     case "$CHOICE" in
-      Lock)     lock-script ;;
-      Logout)   ${pkgs.swayfx}/bin/swaymsg exit ;;
-      Suspend)  systemctl suspend ;;
-      Hibernate) systemctl hibernate ;;
-      Reboot)   systemctl reboot ;;
-      Shutdown) systemctl poweroff ;;
+      lock)     lock-script ;;
+      logout)   ${pkgs.swayfx}/bin/swaymsg exit ;;
+      suspend)  systemctl suspend ;;
+      hibernate) systemctl hibernate ;;
+      reboot)   systemctl reboot ;;
+      shutdown) systemctl poweroff ;;
     esac
   '';
 
