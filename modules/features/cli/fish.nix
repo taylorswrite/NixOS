@@ -21,7 +21,7 @@
             gc = "git commit -m";
             gd = "git diff";
             gg = "git checkout";
-            gb = "git banch";
+            gb = "git branch";
 
             # Eza aliases
             l = "eza";
