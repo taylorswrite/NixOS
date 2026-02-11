@@ -96,7 +96,7 @@ return {
               mark_motion = "<space>mc",
               mark_visual = "<space>mc",
               remove_mark = "<space>md",
-              cr = "<space>s<cr>",
+              -- cr = "<space>s<cr>",
               interrupt = "<space>s<space>",
               exit = "<space>sq",
               clear = "<space>cl",
@@ -371,8 +371,8 @@ return {
           vim.keymap.set("n", "<leader>cj", insert_chunk("julia"), { desc = "Insert Julia Chunk", buffer = true })
 
           -- WIKI LINKS
-          vim.keymap.set("n", "<CR>", follow_wiki_link, { desc = "Follow Wiki Link", buffer = true })
-          vim.keymap.set("n", "gf", follow_wiki_link, { desc = "Follow Wiki Link", buffer = true })
+          -- vim.keymap.set("n", "<CR>", follow_wiki_link, { desc = "Follow Wiki Link", buffer = true })
+          -- vim.keymap.set("n", "gf", follow_wiki_link, { desc = "Follow Wiki Link", buffer = true })
 
           -- TEMPLATES
           vim.keymap.set("n", "<leader>qt", insert_template, { desc = "Insert Template", buffer = true })
