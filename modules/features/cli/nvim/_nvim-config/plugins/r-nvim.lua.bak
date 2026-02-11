@@ -1,0 +1,17 @@
+-- taylorswrite/nixos/NixOS-main/modules/features/cli/nvim/_nvim-config/plugins/r-nvim.lua
+return {
+  "R-nvim/R.nvim",
+  lazy = false,
+  opts = {
+    -- This tells R.nvim to manage the language server connection
+    lsp = {
+      enabled = true,
+      -- Explicitly point to the R binary provided by your Nix devtools module
+      on_attach = function(client, bufnr)
+        -- You can add R-specific keymaps here if desired
+      end,
+    },
+    -- Ensure R.nvim uses the system R installed in your devtools module
+    R_args = { "--quiet", "--no-save", "--no-restore" },
+  }
+}
