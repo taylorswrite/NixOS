@@ -79,7 +79,7 @@ return {
                 end
                 return ft
               end,
-              repl_open_cmd = view.split.vertical.botright("45%"),
+              repl_open_cmd = view.split.horizontal.botright("35%"),
             },
             keymaps = {
               toggle_repl = "<leader>rr",

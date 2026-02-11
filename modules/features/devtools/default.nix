@@ -11,9 +11,11 @@
     environment.systemPackages = with pkgs; [
       # --- Toolchains ---
       gcc
+      gnumake
       uv
       nodejs
       cargo
+      pkg-config
       
       # --- Data Science ---
       python3
@@ -32,6 +34,8 @@
 
       # --- Language Servers ---
       rPackages.languageserver
+      rPackages.jsonlite
+      rPackages.lintr
     ];
   };
 }

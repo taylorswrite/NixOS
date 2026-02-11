@@ -47,12 +47,15 @@
             extraPackages = with pkgs; [
               # Utility
               ripgrep
+              gnumake
               fd
               fzf
               tree-sitter
               ruff
               ty
               lsof
+              python313Packages.ipython
+              radian
 
               # NixOS / Lang Servers
               nil
