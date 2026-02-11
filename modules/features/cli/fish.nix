@@ -27,6 +27,7 @@
             la = "eza -la -g --icons --git --header";
             lg = "eza -lh -g --icons --git --git-ignore --header";
             lt = "eza --tree --level=2";
+            sedit = "set -x SOPS_AGE_KEY (sudo ssh-to-age -private-key -i /etc/ssh/ssh_host_ed25519_key); sops";
           };
           interactiveShellInit = ''
             set -g fish_greeting ""
