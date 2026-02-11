@@ -15,6 +15,8 @@
             "..." = "cd ../..";
             g = "git";
             gs = "git status";
+            gf = "git fetch";
+            gl = "git log";
             ga = "git add";
             gc = "git commit -m";
             gd = "git diff";
