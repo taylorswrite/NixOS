@@ -178,22 +178,46 @@ vim.keymap.set("n", "<leader>mo", "<Plug>MarkdownPreview", { desc = "Start Markd
 -- Additional convenient mappings
 vim.keymap.set("i", "<C-m>", "<Plug>MarkdownPreviewToggle", { desc = "Toggle Markdown Preview (Insert)" })
 
--- Create a new Quarto note with a slugified filename
-vim.keymap.set("n", "<leader>nn", function()
-  local title = vim.fn.input("Note Title: ")
-  if title == "" then return end
+local function create_pkm_note()
+  local categories = { "ml", "database", "python", "R" }
   
-  local date = os.date("%Y-%m-%d")
-  local slug = title:lower():gsub(" ", "-"):gsub("[%p%s]+", "-")
-  local filename = string.format("notes/%s-%s.qmd", date, slug)
+  require('telescope.pickers').new({}, {
+    prompt_title = "Select Category",
+    finder = require('telescope.finders').new_table { results = categories },
+    sorter = require('telescope.config').values.generic_sorter({}),
+    attach_mappings = function(prompt_bufnr, map)
+      local actions = require('telescope.actions')
+      local action_state = require('telescope.actions.state')
 
-  local file = io.open(filename, "w")
-  file:write("---\n")
-  file:write("title: \"" .. title .. "\"\n")
-  file:write("date: " .. date .. "\n")
-  file:write("format: html\n")
-  file:write("---\n\n# " .. title .. "\n\n")
-  file:close()
-  
-  vim.cmd("edit " .. filename)
-end, { desc = "New PKM Note" })
+      actions.select_default:replace(function()
+        actions.close(prompt_bufnr)
+        local folder = action_state.get_selected_entry()[1]
+        local title = vim.fn.input("Note Title: ")
+        
+        if title == "" then return end
+        
+        local dir = "notes/" .. folder
+        local slug = title:lower():gsub(" ", "-"):gsub("[%p%s]+", "-")
+        local path = dir .. "/" .. slug .. ".qmd"
+        local timestamp = os.date("%Y-%m-%d %H:%M")
+        
+        vim.fn.mkdir(dir, "p")
+        
+        local file = io.open(path, "w")
+        file:write("---\n")
+        file:write("title: \"" .. title .. "\"\n")
+        file:write("date: " .. os.date("%Y-%m-%d") .. "\n")
+        file:write("last-modified: " .. timestamp .. "\n")
+        file:write("categories: [" .. folder .. "]\n")
+        file:write("status: \"Seed\"\n")
+        file:write("---\n\n# " .. title .. "\n")
+        file:close()
+        
+        vim.cmd("edit " .. path)
+      end)
+      return true
+    end,
+  }):find()
+end
+
+vim.keymap.set("n", "<localleader>nn", create_pkm_note, { desc = "New PKM Note (Telescope)" })

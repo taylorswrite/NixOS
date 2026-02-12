@@ -75,3 +75,20 @@ vim.api.nvim_create_autocmd("BufEnter", {
   end,
   desc = "Disable comment continuation",
 })
+
+
+vim.api.nvim_create_autocmd("BufWritePre", {
+  pattern = "*.qmd",
+  callback = function()
+    local n_lines = math.min(vim.api.nvim_buf_line_count(0), 20)
+    local lines = vim.api.nvim_buf_get_lines(0, 0, n_lines, false)
+    local time = os.date("%Y-%m-%d %H:%M")
+    
+    for i, line in ipairs(lines) do
+      if line:match("^last%-modified:") then
+        vim.api.nvim_buf_set_lines(0, i - 1, i, false, { "last-modified: " .. time })
+        return
+      end
+    end
+  end,
+})

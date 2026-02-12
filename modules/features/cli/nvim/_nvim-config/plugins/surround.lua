@@ -1,6 +1,6 @@
 return {
   {
-    "echasnovski/mini.surround",
+    "nvim-mini/mini.surround",
     -- opts = {} tells lazy.nvim to automatically call require("mini.surround").setup()
     opts = {
       mappings = {
