@@ -3,10 +3,17 @@
   flake.nixosModules.tmux = { config, pkgs, ... }:
     let
       # Helper script to find git root or current directory
+      # Accepts an optional path argument ($1) to handle inactive windows correctly
       project-root = pkgs.writeShellScriptBin "project-root" ''
-        path=$(${pkgs.tmux}/bin/tmux display-message -p "#{pane_current_path}")
-        root=$(${pkgs.git}/bin/git -C "$path" rev-parse --show-toplevel 2>/dev/null)
-        echo "$(basename "''${root:-$path}")"
+        DIR="''${1:-.}"
+        # Try to find git root
+        ROOT=$(${pkgs.git}/bin/git -C "$DIR" rev-parse --show-toplevel 2>/dev/null)
+        
+        # If ROOT is found, use it; otherwise use the original directory
+        TARGET="''${ROOT:-$DIR}"
+        
+        # Output only the base name (e.g., "nixos" instead of "/home/user/nixos")
+        ${pkgs.coreutils}/bin/basename "$TARGET"
       '';
     in
     {
@@ -19,7 +26,8 @@
           keyMode = "vi";
           mouse = true;
           
-          plugins = with pkgs.tmuxPlugins; [
+          plugins = with pkgs.tmuxPlugins;
+          [
             sensible
             yank
             tmux-thumbs
@@ -28,9 +36,9 @@
             tmux-floax
             tmux-sessionx
             resurrect
+    
             continuum
           ];
-
           extraConfig = ''
             # --- General Settings ---
             set -g default-terminal "tmux-256color"
@@ -38,21 +46,32 @@
             set -g renumber-windows on
             set -g set-clipboard on
             set -g status-position top
+            
+            # Disable automatic renaming to prevent shell titles (path) from interfering
+            set-option -g allow-rename off
+            set-window-option -g automatic-rename off
 
             # --- Theme: Catppuccin v2 ---
             set -g @catppuccin_flavor 'mocha'
             set -g @catppuccin_window_status_style "rounded"
             
             # Module Text
-            set -g @catppuccin_window_default_text " #W"
-            set -g @catppuccin_window_current_text " #W"
+            # We strictly use #{pane_current_command} to ignore the shell title (#W)
+            # We set ALL text variables to ensure the inactive window (default/text) matches the active one.
+            set -g @catppuccin_window_default_text " #{pane_current_command} #(${project-root}/bin/project-root \"#{pane_current_path}\")"
+            set -g @catppuccin_window_current_text " #{pane_current_command} #(${project-root}/bin/project-root \"#{pane_current_path}\")"
+            set -g @catppuccin_window_text " #{pane_current_command} #(${project-root}/bin/project-root \"#{pane_current_path}\")"
+            set -g @catppuccin_window_core_text " #{pane_current_command} #(${project-root}/bin/project-root \"#{pane_current_path}\")"
+  
             set -g @catppuccin_window_status "icon"
-            set -g @catppuccin_window_core_text " #W"
-            set -g @catppuccin_directory_text " #(${project-root}/bin/project-root)"
+            
+            # Ensure the directory module also uses the script if it appears elsewhere
+            set -g @catppuccin_directory_text " #(${project-root}/bin/project-root \"#{pane_current_path}\")"
             set -g @catppuccin_host_text " #(whoami)@#h" 
 
             # Separator & Color Logic
             set -g @catppuccin_status_left_separator  ""
+      
             set -g @catppuccin_status_right_separator ""
             set -g @catppuccin_status_fill "icon"
             set -g @catppuccin_status_connect_separator "no"
@@ -63,12 +82,14 @@
 
             # --- Status Bar Construction ---
             set -g status-left "#{E:@catppuccin_status_session} "
-            set -g status-right "#{E:@catppuccin_status_directory} #{E:@catppuccin_status_host}"
+            set -g status-right "#{E:@catppuccin_status_host}"
+            # #{E:@catppuccin_status_directory} 
 
             # --- Plugin Config ---
             # Floax
             set -g @floax-width '80%'
             set -g @floax-height '80%'
+         
             set -g @floax-border-color 'magenta'
             set -g @floax-text-color 'blue'
             set -g @floax-bind 'p'
@@ -77,6 +98,7 @@
             # SessionX
             set -g @sessionx-bind 'o'
             set -g @sessionx-x-path '~/dotfiles'
+      
             set -g @sessionx-custom-paths '/home/taylor/dotfiles'
             set -g @sessionx-bind-zo-new-window 'ctrl-y'
             set -g @sessionx-auto-accept 'off'
@@ -85,6 +107,7 @@
             set -g @sessionx-zoxide-mode 'on'
             set -g @sessionx-filter-current 'false'
 
+ 
             # Resurrect & Continuum
             set -g @resurrect-strategy-nvim 'session'
             set -g @resurrect-processes 'lazygit lazydocker btop yazi spotify-player-tmux spotify_player cava opencode nvim'
@@ -92,6 +115,7 @@
 
             # --- Key Bindings ---
             # Session & Client
+  
             bind ^X lock-server
             bind ^D detach
             bind ^L refresh-client
@@ -100,6 +124,7 @@
             bind : command-prompt
             bind $ command-prompt "rename-session %%"
 
+  
             # Window Management
             bind ^C new-window -c "$HOME"
             bind c new-window -c "$HOME"
@@ -122,6 +147,7 @@
             bind j select-pane -D
             bind k select-pane -U
             bind l select-pane -R
+    
             bind z resize-pane -Z
             bind -r -T prefix , resize-pane -L 20
             bind -r -T prefix . resize-pane -R 20
