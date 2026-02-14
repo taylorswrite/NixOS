@@ -34,7 +34,7 @@
       self.nixosModules.zathura     # Added PDF viewer
       self.nixosModules.sops        # Encrypted secrets
       self.nixosModules.wiremix     # Audio manager tui
-      # self.nixosModules.gaming      # Gaming system
+      self.nixosModules.gaming      # Gaming system
       self.nixosModules.kmonadThinkpad # Custom Keyboard Layout
       self.nixosModules.performance # Performance mode
 
