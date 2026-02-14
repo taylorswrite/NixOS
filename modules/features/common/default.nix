@@ -2,7 +2,7 @@
 {
   flake.nixosModules.common = { config, lib, pkgs, ... }: 
   let
-    # Fetch keys from GitHub
+    # Fetch public ssh keys from GitHub
     githubKeys = if config.my.githubUser != null then
       pkgs.fetchurl {
         url = "https://github.com/${config.my.githubUser}.keys";
@@ -18,7 +18,7 @@
     options.my = {
       user = lib.mkOption {
         type = lib.types.str;
-        default = "taylor";
+        default = "";
         description = "Primary user username";
       };
 
@@ -47,10 +47,10 @@
         settings = {
           # Deduplicate files to save space
           auto-optimise-store = true;
-          # Enable Flakes (Critical)
+          # Enable Flakes
           experimental-features = [ "nix-command" "flakes" ];
         };
-        # Weekly Garbage Collection to keep disk clean
+        # Weekly Garbage Collection
         gc = {
           automatic = true;
           dates = "weekly";
@@ -58,10 +58,13 @@
         };
       };
 
-      # Allow unfree packages (Drivers, Codecs, Chrome, etc.)
+      # Allow unfree packages
       nixpkgs.config.allowUnfree = true;
 
+      # Basic sys packages
       environment.systemPackages = with pkgs; [
+        git
+        neovim
         wget
         curl
       ];
@@ -73,9 +76,6 @@
         useGlobalPkgs = true;
         useUserPackages = true;
         backupFileExtension = "backup";
-        
-        # Pass inputs/self to all home-manager modules
-        extraSpecialArgs = { inherit inputs self; };
         
         users."${config.my.user}" = {
           home.stateVersion = config.system.stateVersion;
