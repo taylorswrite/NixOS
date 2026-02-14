@@ -1,4 +1,4 @@
-{ self, ... }:
+{ ... }:
 {
   flake.nixosModules.audio = { config, pkgs, ... }: {
     security.rtkit.enable = true;
