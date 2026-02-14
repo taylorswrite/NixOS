@@ -37,6 +37,7 @@
       self.nixosModules.gaming      # Gaming system
       self.nixosModules.kmonadThinkpad # Custom Keyboard Layout
       self.nixosModules.performance # Performance mode
+      self.nixosModules.mullvad     # VPN service
 
       # Machine-specific
       (
