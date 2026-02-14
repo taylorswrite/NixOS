@@ -1,0 +1,10 @@
+keys:
+  - &host_pain age12jh0kfgcpq97tfvjw0hpgkem325j3haprh85cw58z3x4j0jqne3spj4cv3
+  - &host_itachi age16c6d79v46zkzssquldcykt6dskl0xnus8wjje95vthfqnrna7ftq64em8t
+
+creation_rules:
+  - path_regex: secrets\.yaml$
+    key_groups:
+      - age:
+        - *host_pain
+        - *host_itachi
