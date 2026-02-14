@@ -35,12 +35,13 @@
 
   outputs = inputs:
     inputs.flake-parts.lib.mkFlake { inherit inputs; } {
-      # Automatically import everything in ./modules
+      # Import everything in ./modules except with a `_` prefix
       imports = [ (inputs.import-tree ./modules) ];
-
-      systems = [ "x86_64-linux" ];
-
-      # Pass 'inputs' and 'rootPath' to all modules automatically
+      systems = [
+        "x86_64-linux"   # Intel and AMD CPUs
+        "aarch64-darwin" # Apple Silicon
+        "aarch64-linux"  # Raspberry Pi
+      ];
       _module.args.rootPath = ./.;
     };
 }
