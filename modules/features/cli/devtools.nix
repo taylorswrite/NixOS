@@ -9,33 +9,34 @@
   in
   {
     environment.systemPackages = with pkgs; [
-      # --- Toolchains ---
+      # Tools
       gcc
       gnumake
       uv
       nodejs
       cargo
       pkg-config
+      psmisc
+      bat
       
-      # --- Data Science ---
+      # Datascience
       python3
       R
       julia-bin
       sqlite
 
-      # --- Scientific Publishing ---
+      # Publishing
       quarto
       typst
 
-      # --- Editors & CLI Tools ---
+      # AI Coding
       pkgsUnstable.opencode
-      psmisc
-      bat
 
-      # --- Language Servers ---
+      # Language Servers
       rPackages.languageserver
       rPackages.jsonlite
       rPackages.lintr
+      markdown-oxide
     ];
   };
 }
