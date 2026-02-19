@@ -10,6 +10,7 @@
         General.EnableNetworkConfiguration = true;
       };
     };
+    services.resolved.enable = true;
 
     environment.systemPackages = [ pkgs.impala ];
   };

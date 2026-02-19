@@ -39,6 +39,7 @@
                 r.enable = true;
                 julia.enable = true;
                 typst.enable = true;
+                sql.enable = true;
                 # mini_surround.enable = true;
               };
             };
@@ -64,6 +65,7 @@
               nixd
               alejandra
               deadnix
+              sqlfluff
 
               # R
               R
