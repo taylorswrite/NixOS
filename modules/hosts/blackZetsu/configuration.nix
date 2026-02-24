@@ -50,6 +50,8 @@
         boot.loader.generic-extlinux-compatible.enable = true;
         boot.kernelParams = [ "console=ttyS0,115200n8" "console=tty0" ];
         sdImage.compressImage = false;
+        boot.initrd.allowMissingModules = true;
+        boot.kernelPackages = lib.mkForce pkgs.linuxPackages;
 
         # Git Identity
         features.git = {

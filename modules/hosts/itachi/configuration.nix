@@ -2,42 +2,44 @@
 {
   flake.nixosConfigurations.itachi = inputs.nixpkgs.lib.nixosSystem {
     modules = [
-      ./_hardware-configuration.nix # Nix Generated - Host Specific
-      self.nixosModules.common      # Home Manager, Locale, Base Utils
-      self.nixosModules.grub        # Grub & EFI
-      self.nixosModules.plymouth    # Boot Animation (Silent)
-      # self.nixosModules.nvidia      # Nvidia Drivers & Graphics
-      self.nixosModules.wifiImpala  # Lightweight IWD + Impala TUI
-      self.nixosModules.ssh         # Hardened SSH
-      self.nixosModules.tailscale   # VPN
-      self.nixosModules.fail2ban    # Security
-      self.nixosModules.sddm        # Login Manager
-      self.nixosModules.sway        # Main WM
-      self.nixosModules.xfce        # Backup Desktop
-      self.nixosModules.mako        # Notifications
-      self.nixosModules.fish        # Shell Config (Aliases/Init)
-      self.nixosModules.starship    # Prompt
-      self.nixosModules.kitty       # Kitty
-      self.nixosModules.tmux        # Terminal Multiplexer
-      self.nixosModules.pomodoro    # CLI Timer
-      self.nixosModules.firefox     # Privacy Browser + Vertical Tabs
-      self.nixosModules.nvim        # LazyVim
-      self.nixosModules.git         # Git + Delta + LazyGit
-      self.nixosModules.dev         # Languages (Python, R, Rust) & Tools
-      self.nixosModules.docker      # Container Engine
-      self.nixosModules.kvm         # VM Engine (Virt-Manager)
-      self.nixosModules.direnv      # Auto-load dev environments (.envrc integration)
-      self.nixosModules.audio       # Pipewire (Sound) & Audio Group Permissions
-      self.nixosModules.video       # OpenGL (Graphics), Webcam & Brightness Permissions
-      self.nixosModules.bluetooth   # Bluetooth Hardware & GUI Manager (Blueman)
-      self.nixosModules.spotify     # Spotify GUI
-      self.nixosModules.zathura     # Added PDF viewer
-      self.nixosModules.sops        # Encrypted secrets
-      self.nixosModules.wiremix     # Audio manager tui
-      self.nixosModules.gaming      # Gaming system
+      ./_hardware-configuration.nix    # Host Specific
+      self.nixosModules.common         # System and Home Manager Config
+      self.nixosModules.grub           # Grub & EFI
+      self.nixosModules.plymouth       # Boot Animation
+      # self.nixosModules.nvidia       # Nvidia Drivers & Graphics
+      self.nixosModules.wifiImpala     # IWD & Impala TUI
+      # self.nixosModules.wifi         # network manager
+      self.nixosModules.ssh            # Hardened SSH
+      self.nixosModules.tailscale      # VPN Tunnel
+      self.nixosModules.fail2ban       # Security
+      self.nixosModules.sddm           # Login Manager
+      self.nixosModules.sway           # Main WM
+      self.nixosModules.swayNvidia     # Main WM & Nvidia Fixes
+      self.nixosModules.xfce           # Backup Desktop
+      self.nixosModules.mako           # Notifications
+      self.nixosModules.fish           # Shell Config & Aliases
+      self.nixosModules.starship       # Pretty Shell Prompt
+      self.nixosModules.kitty          # Terminal
+      self.nixosModules.tmux           # Terminal Multiplexer
+      self.nixosModules.pomodoro       # CLI Pomodoro Timer
+      self.nixosModules.firefox        # Browser & configuration
+      self.nixosModules.nvim           # LazyVim
+      self.nixosModules.git            # Git & tools
+      self.nixosModules.dev            # Programing Languages & Tools
+      self.nixosModules.docker         # Container Engine
+      self.nixosModules.kvm            # VM Engine
+      self.nixosModules.direnv         # Auto-load .envrc
+      self.nixosModules.audio          # Pipewire
+      self.nixosModules.video          # Graphics, Webcam & Brightness
+      self.nixosModules.bluetooth      # Bluetooth & Blueman
+      self.nixosModules.spotify        # Spotify GUI
+      self.nixosModules.zathura        # PDF viewer
+      self.nixosModules.sops           # Encrypted secrets
+      self.nixosModules.wiremix        # Audio tui
+      self.nixosModules.gaming         # Steam & Game Compatibility
       self.nixosModules.kmonadThinkpad # Custom Keyboard Layout
-      self.nixosModules.performance # Performance mode
-      self.nixosModules.mullvad     # VPN service
+      self.nixosModules.performance    # CPU Performance modes
+      self.nixosModules.mullvad        # VPN service
 
       # Machine-specific
       (
@@ -52,7 +54,6 @@
           boot.initrd.luks.devices."luks-6109b0b5-580c-41ee-8f9d-331ab4208886".device = "/dev/disk/by-uuid/6109b0b5-580c-41ee-8f9d-331ab4208886";
           boot.resumeDevice = "/dev/mapper/luks-6109b0b5-580c-41ee-8f9d-331ab4208886";
 
-          # Git Identity (Required options for the git module)
           features.git = {
             enable = true;
             userName = "William Martinez";
