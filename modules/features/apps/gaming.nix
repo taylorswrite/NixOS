@@ -1,16 +1,23 @@
-{ ... }:
+{ inputs, ... }:
 {
-  flake.nixosModules.gaming = { pkgs, ... }: {
+  flake.nixosModules.gaming = { pkgs, ... }:
+  let
+    pkgsUnstable = import inputs.nixpkgs-unstable {
+      system = pkgs.stdenv.hostPlatform.system; # 'system' is generally preferred over 'localSystem' here
+      config.allowUnfree = true;
+    };
+  in
+  {
     programs.steam = {
       enable = true;
-      remotePlay.openFirewall = true;
-      dedicatedServer.openFirewall = true;
-      localNetworkGameTransfers.openFirewall = true;
-      # Steam's internal libraries usually handle these; only keep if you have specific compatibility issues
-      extraCompatPackages = [ pkgs.protonup-qt ]; 
+      package = pkgsUnstable.steam; # Forces Steam to use the unstable package
+      remotePlay.openFirewall = false;
+      dedicatedServer.openFirewall = false;
+      localNetworkGameTransfers.openFirewall = false;
+      extraCompatPackages = [ pkgsUnstable.proton-ge-bin ]; # Explicitly use unstable
     };
 
-    # Enable GameMode for better performance
+    # Note: Enable flags use the module from your host's NixOS channel.
     programs.gamemode.enable = true;
 
     # 32-bit support is required for most Steam games
@@ -19,7 +26,8 @@
       enable32Bit = true;
     };
 
-    environment.systemPackages = with pkgs; [
+    # Pulls all listed system packages from the unstable channel
+    environment.systemPackages = with pkgsUnstable; [
       mangohud
       heroic
       lutris
