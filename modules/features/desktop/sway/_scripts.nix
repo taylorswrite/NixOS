@@ -4,7 +4,19 @@ let
   # ========================================================================
   # PYTHON SCRIPTS
   # ========================================================================
-
+  caffeineScript = pkgs.writeShellScriptBin "caffeine-toggle" ''
+    if ${pkgs.procps}/bin/pgrep -x swayidle >/dev/null; then
+        ${pkgs.procps}/bin/pkill -x swayidle
+        ${pkgs.libnotify}/bin/notify-send "☕ Caffeine ON" "System will stay awake"
+    else
+        swayidle -w \
+            timeout 300 'lock-script' \
+            timeout 600 'swaymsg "output * dpms off"' \
+            resume 'swaymsg "output * dpms on"' \
+            before-sleep 'lock-script' &
+        ${pkgs.libnotify}/bin/notify-send "💤 Caffeine OFF" "Auto-sleep enabled"
+    fi
+  '';
   batteryScript = pkgs.writers.writePython3Bin "battery-icon" {
     flakeIgnore = [ "E501" "W293" "E261" ];
   } ''
@@ -254,6 +266,7 @@ let
 in
 {
   home.packages = [
+    caffeineScript
     batteryScript
     brightnessScript
     volumeScript

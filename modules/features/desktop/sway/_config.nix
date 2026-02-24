@@ -143,7 +143,7 @@
     # Scripts
     bindsym $mod+x exec powermenu-script
     bindsym $mod+Escape exec lock-script
-
+    bindsym $mod+Shift+c exec caffeine-toggle
     bindsym $mod+Shift+Space bar mode toggle
 
     # Launchers
