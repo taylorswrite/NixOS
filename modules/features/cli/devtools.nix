@@ -13,11 +13,15 @@
       gcc
       gnumake
       uv
+      ruff
       nodejs
       cargo
       pkg-config
       psmisc
       bat
+
+      # Editor
+      antigravity
       
       # Datascience
       python3
