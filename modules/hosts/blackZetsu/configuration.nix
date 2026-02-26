@@ -7,10 +7,11 @@
       inputs.nixos-hardware.nixosModules.raspberry-pi-4
       self.nixosModules.common      # Home Manager, Locale, Base Utils
       # self.nixosModules.wifiImpala # Wifi Tui
-      self.nixosModules.ssh          # Hardened SSH
-      self.nixosModules.tailscale    # VPN
-      self.nixosModules.fail2ban     # Security
-      self.nixosModules.mullvad      # VPN service
+      self.nixosModules.wifiStandard
+      self.nixosModules.sshPW        # Password SSH
+      # self.nixosModules.tailscale    # VPN
+      # self.nixosModules.fail2ban     # Security
+      # self.nixosModules.mullvad      # VPN service
       # self.nixosModules.sddm         # Login Manager
       # self.nixosModules.sway         # Main WM (Works well on Pi 4/5)
       # self.nixosModules.xfce         # Backup Desktop
@@ -42,6 +43,10 @@
       ({ config, pkgs, lib, ... }: {
         networking.hostName = "blackZetsu";
         my.user = "taylor";
+        # users.users.root.initialHashedPassword = lib.mkForce "$6$kfftua1sldp8Opg.$/ohgIQzRrOoF1Y1.OCUigMQ8Lk1ef7UOHMyFnL9QYTqIyjLlUWTYo6xFGJu47Pd6Db/R.mkNHtVIw8DDgtmvP/";
+        # users.users."${config.my.user}".initialHashedPassword = "$6$kfftua1sldp8Opg.$/ohgIQzRrOoF1Y1.OCUigMQ8Lk1ef7UOHMyFnL9QYTqIyjLlUWTYo6xFGJu47Pd6Db/R.mkNHtVIw8DDgtmvP/";
+        users.users.root.initialPassword = "changeme";
+        users.users."${config.my.user}".initialPassword = "changeme";
         my.githubUser = "taylorswrite";
         my.githubKeyHash = "sha256-NNOL3eS5Sp2vwLNSaq4F+lQfVWdFdpCwI2hS9ZL84Hk=";
 
@@ -51,7 +56,19 @@
         boot.kernelParams = [ "console=ttyS0,115200n8" "console=tty0" ];
         sdImage.compressImage = false;
         boot.initrd.allowMissingModules = true;
-        boot.kernelPackages = lib.mkForce pkgs.linuxPackages;
+        # boot.kernelPackages = lib.mkForce pkgs.linuxPackages;
+
+        # Used only when using virutualisation
+        virtualisation.vmVariant = {
+          virtualisation.cores = 4;
+          virtualisation.memorySize = 4096;
+          virtualisation.diskSize = 8192;
+        };
+
+        documentation.man.generateCaches = false;
+        documentation.enable = false;
+        documentation.man.enable = false;
+        documentation.nixos.enable = false;
 
         # Git Identity
         features.git = {

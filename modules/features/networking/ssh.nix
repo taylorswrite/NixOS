@@ -22,4 +22,27 @@
     # Open the default SSH port
     networking.firewall.allowedTCPPorts = [ 22 ];
   };
+
+  flake.nixosModules.sshPW = { config, lib, ... }: {
+    services.openssh = {
+      enable = true;
+      settings = {
+        # Hardening
+        PermitRootLogin = "yes";
+        PasswordAuthentication = true;
+        KbdInteractiveAuthentication = false;
+        
+        # Traffic restrictions
+        X11Forwarding = false;
+        AllowAgentForwarding = "no";
+        AllowStreamLocalForwarding = "no";
+        
+        # Authentication
+        # AuthenticationMethods = "publickey";
+      };
+    };
+
+    # Open the default SSH port
+    networking.firewall.allowedTCPPorts = [ 22 ];
+  };
 }

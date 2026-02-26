@@ -18,5 +18,6 @@
   flake.nixosModules.wifiStandard = { config, pkgs, ... }: {
     networking.networkmanager.enable = true;
     networking.wireless.iwd.enable = false;
+    networking.networkmanager.wifi.powersave = false;
   };
 }
