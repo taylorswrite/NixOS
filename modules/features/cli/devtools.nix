@@ -19,6 +19,8 @@
       pkg-config
       psmisc
       bat
+      btop
+      yazi
 
       # Editor
       antigravity

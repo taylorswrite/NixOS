@@ -9,9 +9,9 @@
       # self.nixosModules.wifiImpala # Wifi Tui
       self.nixosModules.wifiStandard
       self.nixosModules.sshPW        # Password SSH
-      # self.nixosModules.tailscale    # VPN
-      # self.nixosModules.fail2ban     # Security
-      # self.nixosModules.mullvad      # VPN service
+      self.nixosModules.tailscale    # VPN
+      self.nixosModules.fail2ban     # Security
+      self.nixosModules.mullvad      # VPN service
       # self.nixosModules.sddm         # Login Manager
       # self.nixosModules.sway         # Main WM (Works well on Pi 4/5)
       # self.nixosModules.xfce         # Backup Desktop
