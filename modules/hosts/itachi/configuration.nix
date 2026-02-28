@@ -14,7 +14,7 @@
       self.nixosModules.fail2ban       # Security
       self.nixosModules.sddm           # Login Manager
       self.nixosModules.sway           # Main WM
-      self.nixosModules.swayNvidia     # Main WM & Nvidia Fixes
+      # self.nixosModules.swayNvidia     # Main WM & Nvidia Fixes
       self.nixosModules.xfce           # Backup Desktop
       self.nixosModules.mako           # Notifications
       self.nixosModules.fish           # Shell Config & Aliases
