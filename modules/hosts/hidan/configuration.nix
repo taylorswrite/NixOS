@@ -32,6 +32,7 @@
           };
 
           config = {
+            system.primaryUser = "william";
             networking.hostName = "hidan";
             nix.settings.experimental-features = "nix-command flakes";
             system.stateVersion = 4;

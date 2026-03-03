@@ -6,8 +6,6 @@
       
       # Native Nix-darwin AeroSpace settings
       settings = {
-        start-at-login = true;
-        
         gaps = {
           inner.horizontal = 8;
           inner.vertical =   8;
