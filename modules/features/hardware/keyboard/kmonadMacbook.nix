@@ -2,10 +2,10 @@
 {
   flake.darwinModules.kmonadMacbook = { lib, config, pkgs, ... }: 
   let
-    # Pull the kmonad binary directly from the upstream flake for your specific architecture
+    # Pull the kmonad binary directly from the upstream flake
     kmonadPkg = inputs.kmonad.packages.${pkgs.system}.kmonad;
 
-    kmonadConfig = pkgs.writeText "macbook-internal.kbd" ''
+    kmonadConfigText = ''
       (defcfg
         input  (iokit-name "Apple Internal Keyboard / Trackpad")
         output (kext)
@@ -64,13 +64,18 @@
       )
     '';
   in {
-    # Provide the newly built package to the system
     environment.systemPackages = [ kmonadPkg ];
+
+    # Create a static path for the config so launchd always finds it
+    environment.etc."kmonad/config.kbd".text = kmonadConfigText;
 
     launchd.daemons.kmonad = {
       serviceConfig = {
-        # Execute the upstream binary
-        ProgramArguments = [ "${kmonadPkg}/bin/kmonad" "${kmonadConfig}" ];
+        # Using the absolute path in the system profile prevents permission loss on updates
+        ProgramArguments = [ 
+          "/run/current-system/sw/bin/kmonad" 
+          "/etc/kmonad/config.kbd" 
+        ];
         RunAtLoad = true;
         KeepAlive = true;
         UserName = "root";
