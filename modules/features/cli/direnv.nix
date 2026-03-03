@@ -1,6 +1,6 @@
-{ self, ... }:
-{
-  flake.nixosModules.direnv = { config, ... }: {
+{ ... }:
+let
+  sharedModule = { config, ... }: {
     home-manager.users."${config.my.user}" = {
       programs.direnv = {
         enable = true;
@@ -10,4 +10,8 @@
       };
     };
   };
+in
+{
+  flake.nixosModules.direnv = sharedModule;
+  flake.darwinModules.direnv = sharedModule;
 }

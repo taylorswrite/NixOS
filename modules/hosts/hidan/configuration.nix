@@ -9,6 +9,9 @@
       self.darwinModules.git
       self.darwinModules.nvim
       self.darwinModules.starship
+      self.darwinModules.kitty
+      self.darwinModules.direnv
+      self.darwinModules.aerospace
 
       (
         { config, lib, pkgs, ... }:
@@ -33,12 +36,7 @@
             nix.settings.experimental-features = "nix-command flakes";
             system.stateVersion = 4;
             ids.gids.nixbld = 350;
-
-            programs.zsh.enable = true;
-
             my.user = "william";
-
-            # Explicitly define the user's home directory for Home Manager
             users.users."${config.my.user}" = {
               home = "/Users/${config.my.user}";
             };
