@@ -1,0 +1,7 @@
+(defcfg
+  input  (iokit-name "Apple Internal Keyboard / Trackpad")
+  output (kext)
+  fallthrough true
+)
+(defsrc a)
+(deflayer main a)

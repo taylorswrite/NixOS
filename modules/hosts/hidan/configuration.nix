@@ -62,6 +62,7 @@
                 "mullvad-vpn"
                 "betterdisplay"
                 "amethyst"
+                "karabiner-elements"
               ];
             };
 
