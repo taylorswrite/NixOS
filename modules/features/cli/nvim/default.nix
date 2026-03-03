@@ -1,82 +1,82 @@
 { inputs, self, ... }:
-{
-  flake.nixosModules.nvim =
-    { config, pkgs, ... }:
-    {
+let
+  sharedModule = { config, pkgs, ... }: {
+    # Enable Neovim and LazyVim in Home Manager
+    home-manager.users."${config.my.user}" =
+      { pkgs, ... }:
+      {
+        imports = [
+          inputs.lazyvim.homeManagerModules.default
+        ];
 
-      # Enable Neovim and LazyVim in Home Manager
-      home-manager.users."${config.my.user}" =
-        { pkgs, ... }:
-        {
-          imports = [
-            inputs.lazyvim.homeManagerModules.default
-          ];
+        # Add extra plugins
+        programs.neovim.plugins = [
+          pkgs.vimPlugins.snacks-nvim
+          (pkgs.vimPlugins.nvim-treesitter.withPlugins (p: [
+            p.json
+            p.nix
+            p.python
+            p.markdown
+          ]))
+        ];
 
-          # Add extra plugins
-          programs.neovim.plugins = [
-            pkgs.vimPlugins.snacks-nvim
-            (pkgs.vimPlugins.nvim-treesitter.withPlugins (p: [
-              p.json
-              p.nix
-              p.python
-              p.markdown
-            ]))
-          ];
-
-          programs.lazyvim = {
-            enable = true;
-
-            # Point to your configuration directory
-            # (Renamed to _nvim-config so import-tree ignores it)
-            configFiles = ./_nvim-config;
-
-            # LazyVim Extras
-            extras = {
-              lang = {
-                nix.enable = true;
-                python.enable = true;
-                markdown.enable = true;
-                r.enable = true;
-                julia.enable = true;
-                typst.enable = true;
-                sql.enable = true;
-                # mini_surround.enable = true;
-              };
+        programs.lazyvim = {
+          enable = true;
+          
+          # Point to your configuration directory
+          configFiles = ./_nvim-config;
+          
+          # LazyVim Extras
+          extras = {
+            lang = {
+              nix.enable = true;
+              python.enable = true;
+              markdown.enable = true;
+              r.enable = true;
+              julia.enable = true;
+              typst.enable = true;
+              sql.enable = true;
+              # mini_surround.enable = true;
             };
-
-            # Extra Packages available to Neovim
-            extraPackages = with pkgs; [
-              # Utility
-              ripgrep
-              gnumake
-              fd
-              fzf
-              tree-sitter
-              ruff
-              ty
-              lsof
-              python313Packages.ipython
-              radian
-
-              # NixOS / Lang Servers
-              nil
-              nixpkgs-fmt
-              statix
-              nixd
-              alejandra
-              deadnix
-              sqlfluff
-
-              # R
-              R
-              rPackages.languageserver
-              rPackages.tidyverse
-
-              # Markdown
-              markdownlint-cli2
-              markdown-oxide
-            ];
           };
+
+          # Extra Packages available to Neovim
+          extraPackages = with pkgs; [
+            # Utility
+            ripgrep
+            gnumake
+            fd
+            fzf
+            tree-sitter
+            ruff
+            ty
+            lsof
+            python313Packages.ipython
+            radian
+
+            # NixOS / Lang Servers
+            nil
+            nixpkgs-fmt
+            statix
+            nixd
+            alejandra
+            deadnix
+            sqlfluff
+
+            # R
+            R
+            rPackages.languageserver
+            rPackages.tidyverse
+
+            # Markdown
+            markdownlint-cli2
+            markdown-oxide
+          ];
         };
-    };
+      };
+  };
+in
+{
+  flake.nixosModules.nvim = sharedModule;
+  flake.darwinModules.nvim = sharedModule;
 }

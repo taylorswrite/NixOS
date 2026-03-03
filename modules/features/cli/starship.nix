@@ -1,10 +1,9 @@
 { self, ... }:
-{
-  flake.nixosModules.starship = { config, lib, ... }: {
+let
+  sharedModule = { config, lib, ... }: {
     home-manager.users."${config.my.user}" = {
       programs.starship = {
         enable = true;
-        
         settings = {
           add_newline = false;
           
@@ -58,4 +57,8 @@
       };
     };
   };
+in
+{
+  flake.nixosModules.starship = sharedModule;
+  flake.darwinModules.starship = sharedModule;
 }

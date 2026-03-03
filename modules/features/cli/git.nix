@@ -1,6 +1,6 @@
 { self, ... }:
-{
-  flake.nixosModules.git = { config, lib, pkgs, ... }: 
+let
+  sharedModule = { config, lib, pkgs, ... }: 
   let
     cfg = config.features.git;
   in
@@ -20,12 +20,11 @@
     };
 
     config = lib.mkIf cfg.enable {
-      programs.git.enable = true;
+      environment.systemPackages = [ pkgs.git ];
 
       home-manager.users."${config.my.user}" = {
         programs.git = {
           enable = true;
-          
           settings = {
             user = {
               name = cfg.userName;
@@ -41,7 +40,7 @@
 
         programs.delta = {
           enable = true;
-          enableGitIntegration = true; 
+          enableGitIntegration = true;
           options = {
             navigate = true;
             light = false;
@@ -57,4 +56,8 @@
       };
     };
   };
+in
+{
+  flake.nixosModules.git = sharedModule;
+  flake.darwinModules.git = sharedModule;
 }

@@ -3,14 +3,61 @@
   flake.darwinConfigurations.hidan = inputs.darwin.lib.darwinSystem {
     system = "aarch64-darwin";
     modules = [
+      inputs.home-manager.darwinModules.home-manager
+
+      self.darwinModules.fish
+      self.darwinModules.git
+      self.darwinModules.nvim
+      self.darwinModules.starship
 
       (
-        { config, pkgs, ... }:
+        { config, lib, pkgs, ... }:
         {
-          networking.hostName = "hidan";
-          services.nix-daemon.enable = true;
-          nix.settings.experimental-features = "nix-command flakes";
-          system.stateVersion = 4;
+          options.my = {
+            user = lib.mkOption {
+              type = lib.types.str;
+              default = "william";
+            };
+            githubUser = lib.mkOption {
+              type = lib.types.nullOr lib.types.str;
+              default = "taylorswrite";
+            };
+            githubKeyHash = lib.mkOption {
+              type = lib.types.str;
+              default = "";
+            };
+          };
+
+          config = {
+            networking.hostName = "hidan";
+            nix.settings.experimental-features = "nix-command flakes";
+            system.stateVersion = 4;
+            ids.gids.nixbld = 350;
+
+            programs.zsh.enable = true;
+
+            my.user = "william";
+
+            # Explicitly define the user's home directory for Home Manager
+            users.users."${config.my.user}" = {
+              home = "/Users/${config.my.user}";
+            };
+
+            features.git = {
+              enable = true;
+              userName = "William Martinez";
+              userEmail = "wtmartinez@ucla.edu";
+            };
+
+            home-manager = {
+              useGlobalPkgs = true;
+              useUserPackages = true;
+              backupFileExtension = "backup";
+              users."${config.my.user}" = {
+                home.stateVersion = "25.11"; 
+              };
+            };
+          };
         }
       )
     ];
