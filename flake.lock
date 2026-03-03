@@ -130,6 +130,30 @@
         "type": "github"
       }
     },
+    "kmonad": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "dir": "nix",
+        "lastModified": 1772521505,
+        "narHash": "sha256-NZRB1umQueAqONm6wvCP6h/EP2wDWlNTt9aqWD/eT54=",
+        "ref": "refs/heads/master",
+        "rev": "996e6fa813ede482a4917097ad53d4afed237fd6",
+        "revCount": 1044,
+        "submodules": true,
+        "type": "git",
+        "url": "https://github.com/kmonad/kmonad"
+      },
+      "original": {
+        "dir": "nix",
+        "submodules": true,
+        "type": "git",
+        "url": "https://github.com/kmonad/kmonad"
+      }
+    },
     "lazyvim": {
       "inputs": {
         "flake-utils": "flake-utils",
@@ -239,6 +263,7 @@
         "flake-parts": "flake-parts",
         "home-manager": "home-manager",
         "import-tree": "import-tree",
+        "kmonad": "kmonad",
         "lazyvim": "lazyvim",
         "nix-homebrew": "nix-homebrew",
         "nixos-hardware": "nixos-hardware",
