@@ -3,6 +3,7 @@ let
   sharedModule = { config, pkgs, ... }: {
     # System-level Fish enablement
     programs.fish.enable = true;
+    environment.shells = [ pkgs.fish ];
     users.users."${config.my.user}".shell = pkgs.fish;
 
     home-manager.users."${config.my.user}" = {

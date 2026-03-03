@@ -1,6 +1,6 @@
 { self, ... }:
-{
-  flake.nixosModules.tmux = { config, pkgs, ... }:
+let
+  sharedModule = { config, pkgs, ... }:
     let
       # Helper script to find git root or current directory
       # Accepts an optional path argument ($1) to handle inactive windows correctly
@@ -172,4 +172,8 @@
         };
       };
     };
+in
+{
+  flake.nixosModules.tmux = sharedModule;
+  flake.darwinModules.tmux = sharedModule;
 }

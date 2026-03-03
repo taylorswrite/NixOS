@@ -12,6 +12,7 @@
     flake-parts.url = "github:hercules-ci/flake-parts";
     import-tree.url = "github:vic/import-tree";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+    nix-homebrew.url = "github:zhaofengli-wip/nix-homebrew";
 
     home-manager = {
       url = "github:nix-community/home-manager";
