@@ -37,7 +37,8 @@
       self.nixosModules.sops           # Encrypted secrets
       self.nixosModules.wiremix        # Audio tui
       self.nixosModules.gaming         # Steam & Game Compatibility
-      self.nixosModules.kmonadThinkpad # Custom Keyboard Layout
+      # self.nixosModules.kmonadThinkpad # Custom Keyboard Layout
+      self.nixosModules.kmonadKinesisAdv
       # self.nixosModules.performance  # CPU Performance modes
       self.nixosModules.mullvad        # VPN service
 
