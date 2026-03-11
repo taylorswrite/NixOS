@@ -51,7 +51,11 @@ let
 
         programs.lazygit = {
           enable = true;
-          settings = {};
+          settings = {
+              os = {
+                editPreset = "nvim";
+              };
+          };
         };
       };
     };
