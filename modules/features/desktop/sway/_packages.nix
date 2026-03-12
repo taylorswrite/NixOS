@@ -38,5 +38,6 @@ in
     pinta
     mpv
     obsidian
+    kdePackages.ark
   ];
 }
