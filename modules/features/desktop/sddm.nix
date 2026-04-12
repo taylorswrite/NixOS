@@ -1,14 +1,15 @@
+# Removed catppuccin-sddm theme because it breaks sddm on wayland.
 { pkgs, ... }:
 {
   flake.nixosModules.sddm = { pkgs, ... }: 
-  let
-    catppuccin-custom = pkgs.catppuccin-sddm.override {
-      flavor = "mocha";
-      accent = "mauve";
-      font  = "Noto Sans";
-      fontSize = "9";
-    };
-  in
+  # let
+  #   catppuccin-custom = pkgs.catppuccin-sddm.override {
+  #     flavor = "mocha";
+  #     accent = "mauve";
+  #     font  = "Noto Sans";
+  #     fontSize = "9";
+  #   };
+  # in
   {
     services.xserver.enable = true;
 
@@ -17,9 +18,9 @@
       wayland.enable = true;
       enableHidpi = true;
       package = pkgs.kdePackages.sddm; 
-      theme = "catppuccin-mocha-mauve";
+      # theme = "catppuccin-mocha-mauve";
       extraPackages = [
-        catppuccin-custom
+        # catppuccin-custom
         pkgs.kdePackages.qt5compat
         pkgs.kdePackages.qtmultimedia
         pkgs.kdePackages.qtsvg
@@ -27,6 +28,6 @@
       ];
     };
 
-    environment.systemPackages = [ catppuccin-custom ];
+    # environment.systemPackages = [ catppuccin-custom ];
   };
 }
