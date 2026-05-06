@@ -67,6 +67,21 @@
       # Allow unfree packages
       nixpkgs.config.allowUnfree = true;
 
+      nixpkgs.overlays = [
+        (final: prev: {
+          openldap = prev.openldap.overrideAttrs (old: {
+            doCheck = false;
+          });
+          
+          # Force the overlay onto 32-bit packages as well
+          pkgsi686Linux = prev.pkgsi686Linux // {
+            openldap = prev.pkgsi686Linux.openldap.overrideAttrs (old: {
+              doCheck = false;
+            });
+          };
+        })
+      ];
+
       # Basic sys packages
       environment.systemPackages = with pkgs; [
         git

@@ -12,8 +12,8 @@
     };
 
     environment.systemPackages = with pkgs; [
-      xfce4-whiskermenu-plugin
-      xfce4-terminal
+      xfce.xfce4-whiskermenu-plugin
+      xfce.xfce4-terminal
     ];
   };
 }

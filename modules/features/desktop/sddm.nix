@@ -2,14 +2,14 @@
 { pkgs, ... }:
 {
   flake.nixosModules.sddm = { pkgs, ... }: 
-  # let
-  #   catppuccin-custom = pkgs.catppuccin-sddm.override {
-  #     flavor = "mocha";
-  #     accent = "mauve";
-  #     font  = "Noto Sans";
-  #     fontSize = "9";
-  #   };
-  # in
+  let
+    catppuccin-custom = pkgs.catppuccin-sddm.override {
+      flavor = "mocha";
+      accent = "mauve";
+      font  = "Noto Sans";
+      fontSize = "9";
+    };
+  in
   {
     services.xserver.enable = true;
 
@@ -28,6 +28,6 @@
       ];
     };
 
-    # environment.systemPackages = [ catppuccin-custom ];
+    environment.systemPackages = [ catppuccin-custom ];
   };
 }

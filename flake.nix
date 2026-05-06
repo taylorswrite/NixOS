@@ -7,7 +7,8 @@
   };
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    # Changed to track the 25.11 stable release branch
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11"; 
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     flake-parts.url = "github:hercules-ci/flake-parts";
     import-tree.url = "github:vic/import-tree";
@@ -15,7 +16,8 @@
     nix-homebrew.url = "github:zhaofengli-wip/nix-homebrew";
 
     home-manager = {
-      url = "github:nix-community/home-manager";
+      # Must match the nixpkgs stable release branch
+      url = "github:nix-community/home-manager/release-25.11"; 
       inputs.nixpkgs.follows = "nixpkgs";
     };
 

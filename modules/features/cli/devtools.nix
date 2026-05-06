@@ -48,7 +48,7 @@ let
       programs.direnv = {
         enable = true;
         nix-direnv.enable = true;
-        enableFishIntegration = true;
+        # enableFishIntegration = true;
         # Consider setting silent to false temporarily to debug if it's loading
         silent = false; 
       };
