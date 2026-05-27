@@ -17,6 +17,8 @@
       self.darwinModules.dev
       self.darwinModules.tmux
       self.darwinModules.kmonadMacbook
+      self.darwinModules.zathura
+      self.darwinModules.firefox
 
       (
         { config, lib, pkgs, ... }:
@@ -42,9 +44,13 @@
             system.primaryUser = "${config.my.user}";
             networking.hostName = "hidan";
             nixpkgs.config.allowUnfree = true;
-            nix.settings.experimental-features = "nix-command flakes";
+            nix.settings = {
+              experimental-features = "nix-command flakes";
+              trusted-users = [ "root" "${config.my.user}" ];
+            };
             system.stateVersion = 4;
             ids.gids.nixbld = 350;
+
             users.users."${config.my.user}" = {
               home = "/Users/${config.my.user}";
             };
@@ -56,13 +62,17 @@
             homebrew = {
               enable = true;
               onActivation.cleanup = "zap";
-              taps = [];
-              brews = [];
+              taps = [
+              ];
+              brews = [
+              ];
               casks = [
                 "mullvad-vpn"
                 "betterdisplay"
                 "amethyst"
                 "karabiner-elements"
+                "orbstack"
+                "firefox"
               ];
             };
 

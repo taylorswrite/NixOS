@@ -20,6 +20,7 @@ let
       bat
       btop
       yazi
+      devenv
 
       # Editor
       antigravity
