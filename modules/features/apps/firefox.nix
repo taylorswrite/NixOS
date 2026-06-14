@@ -5,11 +5,11 @@ let
     home-manager.users."${config.my.user}" = {
       programs.firefox = {
         enable = true;
+        configPath = ".mozilla/firefox";
 
         # Prevent Home Manager from trying to install the Linux binary on macOS.
         # You must add "firefox" to your homebrew.casks list in hidan's configuration.
         package = if pkgs.stdenv.isDarwin then null else pkgs.firefox;
-
         profiles.default = {
           id = 0;
           name = "default";
@@ -23,7 +23,6 @@ let
             "general.useragent.locale" = "en-US";
             "gfx.webrender.all" = true;
             "browser.tabs.inTitlebar" = 0;
-
             # New tab
             "browser.newtabpage.enabled" = false;
             "browser.newtabpage.activity-stream.enabled" = false;
@@ -33,7 +32,6 @@ let
             "browser.newtabpage.activity-stream.feeds.snippets" = false;
             "browser.newtabpage.activity-stream.showSponsored" = false;
             "browser.newtabpage.activity-stream.showSponsoredTopSites" = false;
-
             "extensions.autoDisableScopes" = 0;
             "extensions.enabledScopes" = 15;
             "extensions.startupScanScopes" = 15;

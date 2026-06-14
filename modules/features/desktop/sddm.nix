@@ -18,9 +18,9 @@
       wayland.enable = true;
       enableHidpi = true;
       package = pkgs.kdePackages.sddm; 
-      # theme = "catppuccin-mocha-mauve";
+      theme = "catppuccin-mocha-mauve";
       extraPackages = [
-        # catppuccin-custom
+        catppuccin-custom
         pkgs.kdePackages.qt5compat
         pkgs.kdePackages.qtmultimedia
         pkgs.kdePackages.qtsvg

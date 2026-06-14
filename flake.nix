@@ -7,8 +7,8 @@
   };
 
   inputs = {
-    # Changed to track the 25.11 stable release branch
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11"; 
+    # Changed to track the 26.05 stable release branch
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-26.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     flake-parts.url = "github:hercules-ci/flake-parts";
     import-tree.url = "github:vic/import-tree";
@@ -17,7 +17,7 @@
 
     home-manager = {
       # Must match the nixpkgs stable release branch
-      url = "github:nix-community/home-manager/release-25.11"; 
+      url = "github:nix-community/home-manager/release-26.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -51,11 +51,13 @@
     inputs.flake-parts.lib.mkFlake { inherit inputs; } {
       # Import everything in ./modules except with a `_` prefix
       imports = [ (inputs.import-tree ./modules) ];
+
       systems = [
         "x86_64-linux"   # Intel and AMD CPUs
         "aarch64-darwin" # Apple Silicon
         "aarch64-linux"  # Raspberry Pi
       ];
+
       _module.args.rootPath = ./.;
     };
 }

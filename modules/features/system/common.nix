@@ -53,9 +53,11 @@
         settings = {
           # Deduplicate files to save space
           auto-optimise-store = true;
+
           # Enable Flakes
           experimental-features = [ "nix-command" "flakes" ];
         };
+
         # Weekly Garbage Collection
         gc = {
           automatic = true;
@@ -83,12 +85,17 @@
       ];
 
       # Basic sys packages
-      environment.systemPackages = with pkgs; [
+      environment.systemPackages = with pkgs;
+      [
         git
         neovim
         wget
         curl
       ];
+
+      # Enable GVFS and Tumbler for file managers like Thunar
+      services.gvfs.enable = true;
+      services.tumbler.enable = true;
 
       time.timeZone = "America/Los_Angeles";
       i18n.defaultLocale = "en_US.UTF-8";

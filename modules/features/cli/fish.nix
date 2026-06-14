@@ -32,6 +32,7 @@ let
         };
         interactiveShellInit = ''
           set -g fish_greeting ""
+          mise activate fish | source
         '';
       };
 

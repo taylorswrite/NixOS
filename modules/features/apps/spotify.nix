@@ -18,6 +18,7 @@
     environment.systemPackages = with pkgs; [
       spotifyd
       spotify-qt
+      qbz
     ];
 
     home-manager.users."${config.my.user}" = {

@@ -12,6 +12,16 @@ let
       # Tools
       gcc
       gnumake
+      gfortran
+      curl
+      libuv
+      zlib
+      openssl
+      fontconfig
+      freetype
+      libxml2
+      zip
+      unzip
       uv
       ruff
       nodejs
@@ -21,9 +31,13 @@ let
       btop
       yazi
       devenv
+      devbox
+      mise
 
       # Editor
-      antigravity
+      zed-editor
+      rstudio
+      vscodium
       
       # Datascience
       python3
@@ -39,11 +53,20 @@ let
       pkgsUnstable.opencode
 
       # Language Servers
-      # rPackages.languageserver
+      rPackages.languageserver
       rPackages.jsonlite
       rPackages.lintr
       markdown-oxide
     ] ++ (if pkgs.stdenv.isLinux then [ psmisc ] else [ ]);
+
+    # Enable nix-ld strictly on Linux to allow dynamically linked PyPI wheels to execute natively
+    programs.nix-ld = lib.mkIf pkgs.stdenv.isLinux {
+      enable = true;
+      libraries = with pkgs; [
+        stdenv.cc.cc.lib # Provides libstdc++.so.6
+        zlib
+      ];
+    };
 
     home-manager.users."${config.my.user}" = {
       programs.direnv = {

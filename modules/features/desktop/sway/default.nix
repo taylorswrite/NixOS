@@ -7,6 +7,14 @@
       wrapperFeatures.gtk = true;
       package = pkgs.swayfx;
     };
+    xdg.portal = {
+      enable = true;
+      wlr.enable = true;
+      # The GTK portal provides the actual file-chooser dialog for wlroots compositors
+      extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+      # Required in newer NixOS versions to prevent warnings/errors
+      config.common.default = "*";
+    };
 
     # Home Manager Configuration
     home-manager.users."${config.my.user}" = { pkgs, lib, ... }: { 
