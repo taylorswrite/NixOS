@@ -48,7 +48,7 @@
           networking.hostName = "itachi";
           my.user = "taylor";
           my.githubUser = "taylorswrite";
-          my.githubKeyHash = "sha256-NNOL3eS5Sp2vwLNSaq4F+lQfVWdFdpCwI2hS9ZL84Hk=";
+          my.githubKeyHash = "sha256-MA98k+cuyV9AqMOZaeK5KSShP7q3UD0tvSwUeoYAp38=";
           my.performance = "powersave";
           system.stateVersion = "25.11";
           boot.initrd.luks.devices."luks-6109b0b5-580c-41ee-8f9d-331ab4208886".device = "/dev/disk/by-uuid/6109b0b5-580c-41ee-8f9d-331ab4208886";
