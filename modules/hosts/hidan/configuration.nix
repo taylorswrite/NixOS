@@ -2,9 +2,8 @@
 {
   flake.darwinConfigurations.hidan = inputs.darwin.lib.darwinSystem {
     system = "aarch64-darwin";
-    
     # Darwin-optimized package set
-    pkgs = import inputs.nixpkgs-darwin {
+    pkgs = import inputs.nixpkgs {
       system = "aarch64-darwin";
       config.allowUnfree = true;
     };
@@ -24,12 +23,13 @@
       self.darwinModules.dev
       self.darwinModules.tmux
       self.darwinModules.kmonadMacbook
-      self.darwinModules.zathura
+      # self.darwinModules.zathura
       self.darwinModules.firefox
 
       (
         { config, lib, pkgs, ... }:
         {
+       
           # User and Github configuration variables
           options.my = {
             user = lib.mkOption {
@@ -57,7 +57,6 @@
             };
             system.stateVersion = 4;
             ids.gids.nixbld = 350;
-
             users.users."${config.my.user}" = {
               home = "/Users/${config.my.user}";
             };
@@ -70,8 +69,11 @@
               enable = true;
               onActivation.cleanup = "zap";
               taps = [
+                "homebrew-zathura/zathura"
               ];
               brews = [
+                "homebrew-zathura/zathura/zathura"
+                "homebrew-zathura/zathura/zathura-pdf-mupdf"
               ];
               casks = [
                 "mullvad-vpn"
@@ -81,13 +83,22 @@
                 "orbstack"
                 "firefox"
                 "kitty"
+                "slack"
+                "codex"
+                "zed"
+                "rstudio"
               ];
             };
 
             system.activationScripts.postActivation.text = ''
               # Force macOS Directory Services to use the Nix-managed shell
               dscl . -create /Users/${config.my.user} UserShell /run/current-system/sw/bin/fish
+              
+              # Link Zathura plugins for macOS Homebrew installation
+              mkdir -p /opt/homebrew/lib/zathura
+              ln -sf /opt/homebrew/opt/zathura-pdf-mupdf/libpdf-mupdf.dylib /opt/homebrew/lib/zathura/libpdf-mupdf.dylib
             '';
+            
             # Setting Github configuration variables.
             features.git = {
               enable = true;

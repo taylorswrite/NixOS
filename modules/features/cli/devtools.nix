@@ -8,7 +8,8 @@ let
     };
   in
   {
-    environment.systemPackages = with pkgs; [
+    environment.systemPackages = with pkgs;
+    [
       # Tools
       gcc
       gnumake
@@ -35,9 +36,6 @@ let
       mise
 
       # Editor
-      zed-editor
-      rstudio
-      vscodium
       
       # Datascience
       python3
@@ -57,34 +55,41 @@ let
       rPackages.jsonlite
       rPackages.lintr
       markdown-oxide
-    ] ++ (if pkgs.stdenv.isLinux then [ psmisc ] else [ ]);
+    ] ++ (if pkgs.stdenv.isLinux then [ 
+      psmisc
+      rstudio
+      vscodium
+      zed-editor
+    ] else [ ]);
 
-    # Enable nix-ld strictly on Linux to allow dynamically linked PyPI wheels to execute natively
-    programs.nix-ld = lib.mkIf pkgs.stdenv.isLinux {
+    home-manager.users."${config.my.user}" = {
+      programs.direnv = {
+        enable = true;
+        nix-direnv.enable = true;
+        silent = false;
+      };
+
+      programs.fish.interactiveShellInit = ''
+        direnv hook fish | source
+      '';
+    };
+  };
+
+  # Extract nix-ld into its own module for NixOS only
+  nixosOnlyModule = { pkgs, ... }: {
+    programs.nix-ld = {
       enable = true;
       libraries = with pkgs; [
         stdenv.cc.cc.lib # Provides libstdc++.so.6
         zlib
       ];
     };
-
-    home-manager.users."${config.my.user}" = {
-      programs.direnv = {
-        enable = true;
-        nix-direnv.enable = true;
-        # enableFishIntegration = true;
-        # Consider setting silent to false temporarily to debug if it's loading
-        silent = false; 
-      };
-
-      # Manually force the hook if the integration is being stubborn
-      programs.fish.interactiveShellInit = ''
-        direnv hook fish | source
-      '';
-    };
   };
+
 in
 {
-  flake.nixosModules.dev = sharedModule;
+  flake.nixosModules.dev = {
+    imports = [ sharedModule nixosOnlyModule ];
+  };
   flake.darwinModules.dev = sharedModule;
 }

@@ -26,6 +26,7 @@
       url = "github:LnL7/nix-darwin/nix-darwin-26.05"; 
       inputs.nixpkgs.follows = "nixpkgs"; 
     };
+
     kmonad = {
       url = "git+https://github.com/kmonad/kmonad?submodules=1&dir=nix";
       inputs.nixpkgs.follows = "nixpkgs";
