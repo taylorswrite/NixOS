@@ -10,6 +10,10 @@ let
 
         programs.kitty = {
           enable = true;
+          
+          # Use Nix package on Linux, but a dummy package on macOS to avoid Homebrew GUI conflicts
+          package = if pkgs.stdenv.isDarwin then pkgs.runCommand "kitty-dummy" {} "mkdir $out" else pkgs.kitty;
+
           themeFile = "Catppuccin-Mocha";
           font = {
             name = "JetBrainsMono Nerd Font Mono";

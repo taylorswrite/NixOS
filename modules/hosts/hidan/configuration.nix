@@ -2,6 +2,13 @@
 {
   flake.darwinConfigurations.hidan = inputs.darwin.lib.darwinSystem {
     system = "aarch64-darwin";
+    
+    # Darwin-optimized package set
+    pkgs = import inputs.nixpkgs-darwin {
+      system = "aarch64-darwin";
+      config.allowUnfree = true;
+    };
+
     modules = [
       inputs.home-manager.darwinModules.home-manager
       inputs.nix-homebrew.darwinModules.nix-homebrew
@@ -73,6 +80,7 @@
                 "karabiner-elements"
                 "orbstack"
                 "firefox"
+                "kitty"
               ];
             };
 

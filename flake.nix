@@ -10,6 +10,7 @@
     # Changed to track the 26.05 stable release branch
     nixpkgs.url = "github:nixos/nixpkgs/nixos-26.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+
     flake-parts.url = "github:hercules-ci/flake-parts";
     import-tree.url = "github:vic/import-tree";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
@@ -22,10 +23,9 @@
     };
 
     darwin = {
-      url = "github:LnL7/nix-darwin";
-      inputs.nixpkgs.follows = "nixpkgs";
+      url = "github:LnL7/nix-darwin/nix-darwin-25.11"; 
+      inputs.nixpkgs.follows = "nixpkgs-darwin"; 
     };
-
     kmonad = {
       url = "git+https://github.com/kmonad/kmonad?submodules=1&dir=nix";
       inputs.nixpkgs.follows = "nixpkgs";
