@@ -34,8 +34,14 @@ let
       devenv
       devbox
       mise
+      cloudflared
+      supabase-cli
 
       # Editor
+
+      # package manager
+      pnpm
+      corepack
       
       # Datascience
       python3

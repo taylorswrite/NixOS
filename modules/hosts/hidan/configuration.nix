@@ -77,6 +77,8 @@
               ];
               casks = [
                 "mullvad-vpn"
+                "codex"
+                "codex-app"
                 "betterdisplay"
                 "amethyst"
                 "karabiner-elements"
@@ -86,6 +88,8 @@
                 "slack"
                 "codex"
                 "zed"
+                "obs"
+                "visual-studio-code"
                 "rstudio"
               ];
             };
